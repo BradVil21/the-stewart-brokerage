@@ -302,7 +302,7 @@ button { font: inherit; cursor: pointer; }
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: -2;
   background: url("../assets/photos/hero-bg.jpg") center / cover no-repeat;
-  opacity: 0.22;
+  opacity: 0.16;
   /* fade the photo away behind the text column so the copy stays readable */
   -webkit-mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
   mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
@@ -322,6 +322,11 @@ button { font: inherit; cursor: pointer; }
 
 .hero h1 { margin-bottom: var(--sp-3); }
 .hero__lede { font-size: var(--fs-lg); color: var(--ink-600); max-width: 54ch; margin-bottom: var(--sp-3); }
+/* the hero sits over a photo — a fully transparent outline button loses its edge
+   wherever the image is light, so give it an opaque surface */
+.hero__actions .btn--outline { --btn-bg: rgba(255, 255, 255, 0.94); backdrop-filter: blur(4px); }
+.hero__actions .btn--outline:hover { --btn-bg: #fff; }
+
 .hero__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: var(--sp-3); }
 .hero__reassure { display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: var(--fs-xs); color: var(--ink-400); font-weight: 600; }
 .hero__reassure li { display: flex; align-items: center; gap: 0.4rem; }
@@ -449,9 +454,9 @@ button { font: inherit; cursor: pointer; }
    so no grayscale filter and no recolouring here. */
 .logo-card {
   flex: none;
-  display: grid; place-items: center;
-  width: clamp(150px, 17vw, 196px); height: clamp(74px, 8vw, 92px);
-  padding: 0.9rem 1.25rem;
+  display: flex; align-items: center; justify-content: center;
+  width: clamp(158px, 18vw, 210px); height: clamp(88px, 9.5vw, 108px);
+  padding: 0.7rem 1.15rem;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
@@ -463,11 +468,21 @@ button { font: inherit; cursor: pointer; }
   box-shadow: var(--shadow-md);
   border-color: var(--blue-200);
 }
-.logo-marquee img { max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; }
+.logo-card { overflow: hidden; }
+/* object-fit letterboxes every mark inside the card, so wide wordmarks and
+   stacked lockups (BlueCross BlueShield) both sit correctly without clipping. */
+.logo-marquee img {
+  max-width: 100%; max-height: 100%; width: auto; height: auto;
+  min-width: 0; min-height: 0;          /* required or flex items refuse to shrink */
+  object-fit: contain;
+}
 
 @keyframes logo-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
+  /* no scroll, so lay the logos out as a static grid — and drop the duplicated
+     half of the loop, which only exists to make the marquee seamless */
   .logo-marquee__track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; row-gap: 1rem; }
+  .logo-card[aria-hidden="true"] { display: none; }
 }
 .carriers__note {
   text-align: center; font-size: var(--fs-xs); color: var(--ink-400);
