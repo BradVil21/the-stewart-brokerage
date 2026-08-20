@@ -549,6 +549,106 @@
     });
   }
 
+
+  /* ---------- 11. live Google reviews ----------------------------------
+     Pulls real reviews from the Google Business Profile and renders them in
+     place of the proof cards. Leave PLACE_ID empty and the proof cards stay,
+     so the section is never blank and never shows invented reviews.
+
+     TO TURN ON:
+       1. Google Cloud console -> enable "Places API (New)"
+       2. Create an API key, then RESTRICT it:
+            Application restriction -> Websites -> thestewartbrokerage.com/*
+            API restriction        -> Places API (New) only
+          The key sits in this file, which is only acceptable because of those
+          restrictions. Without them anyone can run up the bill.
+       3. Get the Place ID:
+          developers.google.com/maps/documentation/places/web-service/place-id
+       4. Fill both values below.
+
+     Google returns at most 5 reviews and they cannot be reordered or cherry
+     picked, which is precisely why visitors trust them.
+     --------------------------------------------------------------------- */
+  const GOOGLE_REVIEWS = {
+    PLACE_ID: '',   // e.g. 'ChIJ...'
+    API_KEY: '',    // referrer-restricted key
+    MIN_RATING: 4   // never display anything below this
+  };
+
+  function grStars(n) {
+    var star = '<svg viewBox="0 0 24 24"><path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9Z"/></svg>';
+    return '<span class="stars" aria-hidden="true">' + star.repeat(Math.round(n)) + '</span>' +
+           '<span class="sr-only">' + n + ' out of 5 stars</span>';
+  }
+
+  function grCard(r) {
+    var attr = r.authorAttribution || {};
+    var name = attr.displayName || 'Google user';
+    var initials = name.split(/\s+/).slice(0, 2).map(function (w) { return w[0] || ''; }).join('').toUpperCase();
+    var text = (r.originalText && r.originalText.text) || (r.text && r.text.text) || '';
+    var when = r.relativePublishTimeDescription || '';
+    var avatar = attr.photoUri
+      ? '<img class="review__avatar" src="' + attr.photoUri + '" alt="" width="44" height="44" loading="lazy" />'
+      : '<span class="review__avatar" aria-hidden="true">' + initials + '</span>';
+
+    var el = document.createElement('article');
+    el.className = 'review';
+    el.innerHTML =
+      '<div class="review__top">' + avatar +
+      '<span class="review__who"><strong></strong><span></span></span>' +
+      grStars(r.rating || 5) + '</div>' +
+      '<blockquote></blockquote>' +
+      '<p class="review__src">Google Review</p>';
+
+    // Author name and body are set as text, never as markup. These strings come
+    // from the open internet and must not be able to inject anything.
+    el.querySelector('.review__who strong').textContent = name;
+    el.querySelector('.review__who span').textContent = when;
+    el.querySelector('blockquote').textContent = text;
+    return el;
+  }
+
+  function initGoogleReviews() {
+    var track = $('#reviewsTrack');
+    if (!track || !GOOGLE_REVIEWS.PLACE_ID || !GOOGLE_REVIEWS.API_KEY) return;
+
+    fetch('https://places.googleapis.com/v1/places/' + encodeURIComponent(GOOGLE_REVIEWS.PLACE_ID), {
+      headers: {
+        'X-Goog-Api-Key': GOOGLE_REVIEWS.API_KEY,
+        'X-Goog-FieldMask': 'rating,userRatingCount,googleMapsUri,reviews'
+      }
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Places API ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var reviews = (data.reviews || []).filter(function (r) {
+          return (r.rating || 0) >= GOOGLE_REVIEWS.MIN_RATING;
+        });
+        if (!reviews.length) return;                 // keep the proof cards
+
+        track.replaceChildren.apply(track, reviews.map(grCard));
+
+        var rating = $('#reviewsRating'), none = $('#reviewsNoRating');
+        if (rating && data.rating) {
+          var score = rating.querySelector('[data-gr="score"]');
+          var count = rating.querySelector('[data-gr="count"]');
+          if (score) score.textContent = Number(data.rating).toFixed(1);
+          if (count && data.userRatingCount) count.textContent = '(' + data.userRatingCount + ' reviews)';
+          rating.hidden = false;
+          if (none) none.hidden = true;
+        }
+        if (data.googleMapsUri) {
+          $$('a[data-gr-link]').forEach(function (a) { a.href = data.googleMapsUri; });
+        }
+      })
+      .catch(function (err) {
+        // network down, quota hit, bad key — the proof cards are already on screen
+        console.warn('[Stewart] Google reviews unavailable, showing proof cards:', err.message);
+      });
+  }
+
   /* ---------- boot ---------- */
   function init() {
     initPhotoSlots();
@@ -562,6 +662,7 @@
     initFunnel();
     initToTop();
     initYear();
+    initGoogleReviews();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
