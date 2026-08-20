@@ -27,25 +27,34 @@
 
 /* ---------- 01. Design tokens ---------- */
 :root {
-  /* Brand — navy base, bright blue action */
-  --navy-900: #071a33;
-  --navy-800: #0b2545;
-  --navy-700: #13345c;
-  --navy-600: #1d4a7a;
+  /* ------------------------------------------------------------------
+     Brand palette — UnitedHealthcare-inspired.
+     UHC Blue #002677 carries the weight; Bright Blue #196ECF is the
+     action colour; Orange #FF612B is the single accent used sparingly.
+     Changing these four lines re-skins the entire site.
+     ------------------------------------------------------------------ */
+  --navy-900: #001b54;   /* deepest — footer, dark bands            */
+  --navy-800: #002677;   /* UHC Blue — headings, primary surfaces   */
+  --navy-700: #003da5;
+  --navy-600: #0c55b8;
 
-  --blue-700: #1550b8;
-  --blue-600: #1b63d8;
-  --blue-500: #2e7df6;
-  --blue-400: #5b9bff;
-  --blue-200: #b9d3fd;
-  --sky-100: #eaf2fe;
-  --sky-50:  #f5f9ff;
+  --blue-700: #12559e;
+  --blue-600: #1565c7;
+  --blue-500: #196ecf;   /* UHC Bright Blue — buttons, links        */
+  --blue-400: #4a90e2;
+  --blue-200: #b3d4f5;
+  --sky-100:  #e3f1fc;
+  --sky-50:   #f2f8fe;
 
-  --amber-500: #ffb020;
-  --green-600: #16a34a;
-  --green-50:  #eafaf0;
-  --red-600:   #dc2626;
-  --red-50:    #fef2f2;
+  --orange-600: #e04a12;
+  --orange-500: #ff612b; /* UHC Orange — accent, use sparingly      */
+  --orange-50:  #fff1ec;
+
+  --amber-500: #f5b700;  /* UHC Gold — star ratings                 */
+  --green-600: #007000;  /* UHC Green — savings, confirmations      */
+  --green-50:  #e8f5e8;
+  --red-600:   #c8102e;
+  --red-50:    #fdf0f2;
 
   /* Neutrals */
   --ink-900: #0f172a;
@@ -283,15 +292,30 @@ button { font: inherit; cursor: pointer; }
 .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* ---------- 06. Hero ---------- */
+/* Background photo: drop a file at assets/photos/hero-bg.jpg and it appears
+   behind the gradient automatically. No file = gradient alone, still intentional. */
 .hero {
-  position: relative; overflow: hidden;
+  position: relative; overflow: hidden; isolation: isolate;
   background: linear-gradient(180deg, var(--sky-50) 0%, #fff 100%);
   padding: var(--sp-6) 0 var(--sp-7);
 }
-.hero::before {
-  content: ""; position: absolute; top: -220px; right: -160px; width: 720px; height: 720px;
-  background: radial-gradient(circle, rgba(46, 125, 246, 0.14), transparent 66%);
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: url("../assets/photos/hero-bg.jpg") center / cover no-repeat;
+  opacity: 0.22;
+  /* fade the photo away behind the text column so the copy stays readable */
+  -webkit-mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
+  mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
   pointer-events: none;
+}
+.hero::before {
+  content: ""; position: absolute; top: -220px; right: -160px; width: 720px; height: 720px; z-index: -1;
+  background: radial-gradient(circle, rgba(25, 110, 207, 0.16), transparent 66%);
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  /* on phones the photo competes with the copy — pull it right back */
+  .hero::after { opacity: 0.09; -webkit-mask-image: none; mask-image: none; }
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: var(--sp-5); align-items: center; }
 @media (min-width: 1000px) { .hero__inner { grid-template-columns: 1.05fr 0.95fr; gap: var(--sp-6); } }
@@ -343,7 +367,7 @@ button { font: inherit; cursor: pointer; }
 .photo.is-empty::before {
   content: ""; position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
   width: 54px; height: 54px; opacity: 0.5;
-  background: no-repeat center/contain url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232e7df6' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.8'/%3E%3Cpath d='m3 17 5-5 4 4 3-3 6 6'/%3E%3C/svg%3E");
+  background: no-repeat center/contain url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23196ecf' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.8'/%3E%3Cpath d='m3 17 5-5 4 4 3-3 6 6'/%3E%3C/svg%3E");
 }
 
 /* "why us" aside: photo stacked over a quote panel */
@@ -404,11 +428,12 @@ button { font: inherit; cursor: pointer; }
 }
 
 /* ---------- 07. Carrier logo carousel ---------- */
-.carriers { background: #fff; padding: var(--sp-5) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.carriers { background: #fff; padding: var(--sp-6) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .carriers__label {
-  text-align: center; font-size: var(--fs-xs); letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--ink-400); margin-bottom: var(--sp-3); font-weight: 700;
+  text-align: center; font-size: clamp(1.25rem, 2.4vw, 1.7rem); font-weight: 700;
+  color: var(--navy-800); margin: 0 0 var(--sp-4); letter-spacing: -0.02em;
 }
+.carriers__label em { font-style: normal; color: var(--blue-500); }
 .logo-marquee {
   overflow: hidden;
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
@@ -419,18 +444,34 @@ button { font: inherit; cursor: pointer; }
   width: max-content; animation: logo-scroll 45s linear infinite;
 }
 .logo-marquee:hover .logo-marquee__track { animation-play-state: paused; }
-.logo-marquee img {
-  height: clamp(28px, 3.4vw, 42px); width: auto; max-width: 170px;
-  object-fit: contain;
-  /* transparent PNG/SVG on white — desaturated at rest, full colour on hover */
-  filter: grayscale(100%);
-  opacity: 0.62;
-  transition: filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+/* Each logo sits in its own white card — transparent PNG/SVG, full colour.
+   Carrier marks are trademarks; they read as "official" only when shown clean,
+   so no grayscale filter and no recolouring here. */
+.logo-card {
+  flex: none;
+  display: grid; place-items: center;
+  width: clamp(150px, 17vw, 196px); height: clamp(74px, 8vw, 92px);
+  padding: 0.9rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xs);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
-.logo-marquee img:hover { filter: grayscale(0); opacity: 1; }
+.logo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-200);
+}
+.logo-marquee img { max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; }
+
 @keyframes logo-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
-  .logo-marquee__track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; row-gap: 2rem; }
+  .logo-marquee__track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; row-gap: 1rem; }
+}
+.carriers__note {
+  text-align: center; font-size: var(--fs-xs); color: var(--ink-400);
+  max-width: 60ch; margin: var(--sp-4) auto 0; line-height: 1.55;
 }
 
 /* ---------- 08. Sections & cards ---------- */
@@ -796,12 +837,12 @@ button { font: inherit; cursor: pointer; }
 .post-card h3 a:hover { color: var(--blue-600); }
 .post-card p { font-size: var(--fs-sm); margin: 0; flex: 1; }
 
-.thumb--fl { background: linear-gradient(135deg, #0b2545, #1b63d8); }
-.thumb--tx { background: linear-gradient(135deg, #13345c, #2e7df6); }
-.thumb--nv { background: linear-gradient(135deg, #071a33, #1d4a7a); }
-.thumb--gen { background: linear-gradient(135deg, #1550b8, #5b9bff); }
-.thumb--cost { background: linear-gradient(135deg, #0b2545, #16a34a); }
-.thumb--comp { background: linear-gradient(135deg, #13345c, #ffb020); }
+.thumb--fl { background: linear-gradient(135deg, #002677, #1565c7); }
+.thumb--tx { background: linear-gradient(135deg, #003da5, #196ecf); }
+.thumb--nv { background: linear-gradient(135deg, #001b54, #0c55b8); }
+.thumb--gen { background: linear-gradient(135deg, #12559e, #4a90e2); }
+.thumb--cost { background: linear-gradient(135deg, #002677, #007000); }
+.thumb--comp { background: linear-gradient(135deg, #003da5, #ff612b); }
 
 /* article body */
 .article { padding: var(--sp-5) 0 var(--sp-6); }

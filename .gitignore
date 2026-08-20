@@ -29,3 +29,6 @@ Thumbs.db
 # scratch folders used when syncing from the Claude session — safe to delete
 .stewart-sync/
 _git_lock_cleanup/
+
+# FUSE artifacts left by in-place edits over the mount
+.fuse_hidden*
