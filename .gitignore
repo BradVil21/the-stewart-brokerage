@@ -26,5 +26,6 @@ Thumbs.db
 !.vscode/settings.json
 !.vscode/extensions.json
 
-# transfer scratch used when syncing from the Claude session — safe to delete
+# scratch folders used when syncing from the Claude session — safe to delete
 .stewart-sync/
+_git_lock_cleanup/
