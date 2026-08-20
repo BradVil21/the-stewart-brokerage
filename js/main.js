@@ -68,7 +68,7 @@
 
     const showAll = () => items.forEach((el) => {
       el.classList.add('is-visible');
-      if (el.dataset.count) el.textContent = el.dataset.count + (el.dataset.suffix || '');
+      if (el.dataset.count) el.textContent = (el.dataset.prefix || '') + el.dataset.count + (el.dataset.suffix || '');
     });
 
     if (reduceMotion || !('IntersectionObserver' in window)) { showAll(); return; }
@@ -103,13 +103,14 @@
     if (el.dataset.counted) return;
     el.dataset.counted = '1';
     const target = parseFloat(el.dataset.count) || 0;
+    const prefix = el.dataset.prefix || '';   // "$" belongs BEFORE the number
     const suffix = el.dataset.suffix || '';
     const duration = 1500;
     const start = performance.now();
     (function frame(now) {
       const p = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+      el.textContent = prefix + Math.round(target * eased).toLocaleString() + suffix;
       if (p < 1) requestAnimationFrame(frame);
     })(start);
   }
