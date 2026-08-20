@@ -527,8 +527,31 @@
     $$('#year, .js-year').forEach((el) => { el.textContent = new Date().getFullYear(); });
   }
 
+  /* ---------- 11. photo slots ----------
+     Every <figure class="photo" data-photo="…"> shows a labelled placeholder until a real
+     image is dropped in. Drop a file at the src path and the placeholder disappears — no
+     markup change needed. Fails safe in both directions. */
+  function initPhotoSlots() {
+    $$('figure.photo').forEach((fig) => {
+      const img = fig.querySelector('img');
+      if (!img) { fig.classList.add('is-empty'); return; }
+
+      const markEmpty = () => fig.classList.add('is-empty');
+      const markFilled = () => fig.classList.remove('is-empty');
+
+      // complete + naturalWidth 0 means it already failed before this ran
+      if (img.complete) {
+        img.naturalWidth > 0 ? markFilled() : markEmpty();
+      } else {
+        img.addEventListener('load', markFilled, { once: true });
+        img.addEventListener('error', markEmpty, { once: true });
+      }
+    });
+  }
+
   /* ---------- boot ---------- */
   function init() {
+    initPhotoSlots();
     initNav();
     initStickyHeader();
     initCountdown();

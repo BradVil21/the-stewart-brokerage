@@ -312,13 +312,66 @@ button { font: inherit; cursor: pointer; }
 }
 .state-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-500); }
 
+/* ---------- 06b. Photo slots ----------
+   A <figure class="photo" data-photo="label"> renders a labelled placeholder until a real
+   image loads. js/main.js adds .is-empty when the <img> 404s. */
+.photo {
+  position: relative; margin: 0; overflow: hidden;
+  border-radius: var(--r-xl); background: var(--sky-50);
+  box-shadow: var(--shadow-lg);
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo--hero { aspect-ratio: 4 / 3; }
+.photo--tall { aspect-ratio: 4 / 5; }
+
+.photo.is-empty img { display: none; }
+.photo.is-empty {
+  background:
+    repeating-linear-gradient(135deg, rgba(46,125,246,.05) 0 12px, transparent 12px 24px),
+    linear-gradient(160deg, var(--sky-50), #eef4ff);
+  border: 1.5px dashed rgba(46, 125, 246, 0.35);
+  box-shadow: none;
+}
+.photo.is-empty::after {
+  content: attr(data-photo);
+  position: absolute; top: 0.9rem; right: 0.9rem; max-width: calc(100% - 1.8rem);
+  padding: 0.45rem 0.7rem; border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink-600); font-size: 0.72rem; font-weight: 600; text-align: right;
+  box-shadow: var(--shadow-xs);
+}
+.photo.is-empty::before {
+  content: ""; position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
+  width: 54px; height: 54px; opacity: 0.5;
+  background: no-repeat center/contain url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232e7df6' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.8'/%3E%3Cpath d='m3 17 5-5 4 4 3-3 6 6'/%3E%3C/svg%3E");
+}
+
+/* "why us" aside: photo stacked over a quote panel */
+.whyaside { display: grid; gap: var(--sp-4); align-content: start; }
+/* keep the aside roughly the height of the prose beside it */
+@media (min-width: 1000px) { .whyaside .photo--tall { aspect-ratio: 5 / 4; } }
+@media (min-width: 700px) and (max-width: 999px) {
+  .whyaside { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+.whyaside__panel {
+  background: var(--navy-800); color: rgba(255, 255, 255, 0.78);
+  border-radius: var(--r-xl); padding: var(--sp-4);
+}
+.whyaside__quote {
+  color: #fff; font-size: 1.08rem; line-height: 1.55; font-weight: 500;
+  margin: 0 0 var(--sp-3); padding-left: 1rem; border-left: 3px solid var(--blue-500);
+}
+.whyaside__facts { display: grid; gap: 0.85rem; }
+.whyaside__facts li { display: grid; gap: 0.1rem; padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,.14); }
+.whyaside__facts strong { color: #fff; font-size: var(--fs-sm); }
+.whyaside__facts span { font-size: var(--fs-xs); color: rgba(255, 255, 255, 0.6); }
+
 /* hero side card */
 .hero__card {
   background: #fff; border: 1px solid var(--line); border-radius: var(--r-xl);
   box-shadow: var(--shadow-lg); padding: var(--sp-4); position: relative;
 }
-.hero__card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: var(--sp-3); }
-.hero__card h2 { font-size: 1.35rem; margin: 0; }
+.hero__card .badge { margin-bottom: var(--sp-3); }
 .hero__card-rows li {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 0.78rem 0; border-bottom: 1px solid var(--line);
@@ -331,6 +384,23 @@ button { font: inherit; cursor: pointer; }
 .hero__card-foot {
   margin-top: var(--sp-3); padding-top: var(--sp-2); border-top: 1px solid var(--line);
   font-size: var(--fs-xs); color: var(--ink-400); line-height: 1.5;
+}
+
+/* hero media: stat card overlaps the photo's lower-left corner.
+   Declared after .hero__card so the absolute positioning wins. */
+.hero__media { position: relative; margin-top: var(--sp-3); }
+@media (min-width: 1000px) {
+  .hero__media { margin-top: 0; padding-bottom: 3rem; }
+  .hero__media .hero__card {
+    position: absolute; left: -2.75rem; bottom: 0;
+    width: 268px; margin: 0; padding: 1.1rem 1.15rem;
+    border-radius: var(--r-lg);
+  }
+  .hero__media .hero__card .badge { margin-bottom: 0.75rem; font-size: 0.68rem; }
+  .hero__media .hero__card-rows li { padding: 0.5rem 0; }
+  .hero__media .hero__card-label { font-size: 0.82rem; }
+  .hero__media .hero__card-vals strong { font-size: 0.98rem; }
+  .hero__media .hero__card-foot { margin-top: 0.7rem; padding-top: 0.6rem; }
 }
 
 /* ---------- 07. Carrier logo carousel ---------- */

@@ -136,22 +136,25 @@
           </ul>
         </div>
 
-        <aside class="hero__card" data-anim="right" aria-label="Example savings">
-          <div class="hero__card-head">
-            <div>
-              <span class="badge badge--blue">Sample group · 12 employees</span>
-              <h2 style="margin-top:.7rem">What a plan review often finds</h2>
-            </div>
-          </div>
-          <ul class="hero__card-rows">
-            <li><span class="hero__card-label">Premium / employee / month</span><span class="hero__card-vals"><s>$612</s><strong>$438</strong></span></li>
-            <li><span class="hero__card-label">Individual deductible</span><span class="hero__card-vals"><s>$7,500</s><strong>$1,500</strong></span></li>
-            <li><span class="hero__card-label">Network</span><span class="hero__card-vals"><s>Local HMO</s><strong>National PPO</strong></span></li>
-            <li><span class="hero__card-label">Telehealth visit</span><span class="hero__card-vals"><s>$49</s><strong>$0</strong></span></li>
-            <li><span class="hero__card-label">Employees enrolled</span><span class="hero__card-vals"><s>4 of 12</s><strong>11 of 12</strong></span></li>
-          </ul>
-          <p class="hero__card-foot">Illustrative example only — not a quote and not a guarantee of savings. Your numbers depend on employee ages, ZIP codes, plan design, and carrier.</p>
-        </aside>
+        <!-- PHOTO SLOT: drop a real file at assets/photos/hero-team.jpg (landscape, 1600px+ wide).
+             Until then a labelled placeholder renders in its place — see initPhotoSlots() in js/main.js. -->
+        <div class="hero__media" data-anim="right">
+          <figure class="photo photo--hero" data-photo="Team / office photo — 4:3 landscape">
+            <img src="assets/photos/hero-team.jpg"
+                 alt="Small business owner reviewing group health plan options with a benefits advisor"
+                 width="1200" height="900" fetchpriority="high" />
+          </figure>
+
+          <aside class="hero__card" aria-label="Example plan review">
+            <span class="badge badge--blue">Sample group · 12 employees</span>
+            <ul class="hero__card-rows">
+              <li><span class="hero__card-label">Premium / employee</span><span class="hero__card-vals"><s>$612</s><strong>$438</strong></span></li>
+              <li><span class="hero__card-label">Deductible</span><span class="hero__card-vals"><s>$7,500</s><strong>$1,500</strong></span></li>
+              <li><span class="hero__card-label">Enrolled</span><span class="hero__card-vals"><s>4 of 12</s><strong>11 of 12</strong></span></li>
+            </ul>
+            <p class="hero__card-foot">Illustrative example — not a quote.</p>
+          </aside>
+        </div>
       </div>
     </section>
 
@@ -205,60 +208,22 @@
           <a class="btn btn--primary btn--lg" href="quote.html" data-anim="block">Start my quote</a>
         </div>
 
-        <aside class="formcard" data-anim="right">
-          <h3>Not ready for the full quote?</h3>
-          <p class="formcard__sub">Send a note and Petrina will come back to you personally — usually the same business day.</p>
-          <form class="form" id="quickForm" novalidate>
-            <div class="field">
-              <label for="q-name">Your name</label>
-              <input type="text" id="q-name" name="name" autocomplete="name" required />
-              <span class="field__error" data-error-for="q-name"></span>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label for="q-email">Email</label>
-                <input type="email" id="q-email" name="email" autocomplete="email" required />
-                <span class="field__error" data-error-for="q-email"></span>
-              </div>
-              <div class="field">
-                <label for="q-state">State</label>
-                <select id="q-state" name="state" required>
-                  <option value="">Select…</option>
-                  <option>Florida</option>
-                  <option>Texas</option>
-                  <option>Nevada</option>
-                  <option>Other</option>
-                </select>
-                <span class="field__error" data-error-for="q-state"></span>
-              </div>
-            </div>
-            <div class="field">
-              <label for="q-size">How many employees?</label>
-              <select id="q-size" name="teamSize" required>
-                <option value="">Select…</option>
-                <option>Just me / owner only</option>
-                <option>2–9</option>
-                <option>10–24</option>
-                <option>25–49</option>
-                <option>50–100</option>
-              </select>
-              <span class="field__error" data-error-for="q-size"></span>
-            </div>
-            <div class="field">
-              <label for="q-msg">Anything we should know?</label>
-              <textarea id="q-msg" name="message" placeholder="e.g. Renewal is in March and premiums jumped 22%."></textarea>
-            </div>
-            <div class="field">
-              <label class="checkbox">
-                <input type="checkbox" id="q-consent" name="consent" required />
-                <span>I agree that my submitted data is being collected and stored.</span>
-              </label>
-              <span class="field__error" data-error-for="q-consent"></span>
-            </div>
-            <button class="btn btn--navy btn--block btn--lg" type="submit">Send message</button>
-            <p class="form__note">No auto-dialers. No selling your details on.</p>
-            <p class="form__status" id="quickStatus" role="status" aria-live="polite"></p>
-          </form>
+        <aside class="whyaside" data-anim="right">
+          <!-- PHOTO SLOT: assets/photos/advisor.jpg — portrait or square, 900px+ wide -->
+          <figure class="photo photo--tall" data-photo="Advisor / team portrait — 4:5 portrait">
+            <img src="assets/photos/advisor.jpg"
+                 alt="Petrina Stewart, licensed health insurance broker for small businesses in Florida, Texas and Nevada"
+                 width="900" height="1125" loading="lazy" />
+          </figure>
+
+          <div class="whyaside__panel">
+            <p class="whyaside__quote">You are not getting handed to a call centre. You get one licensed broker who knows your renewal date, your census, and your budget.</p>
+            <ul class="whyaside__facts">
+              <li><strong>Independent</strong><span>Not captive to any single carrier</span></li>
+              <li><strong>Licensed FL · TX · NV</strong><span>Quoting all three states</span></li>
+              <li><strong>1–100 employees</strong><span>Small groups are the whole practice</span></li>
+            </ul>
+          </div>
         </aside>
       </div>
     </section>
