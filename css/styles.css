@@ -108,6 +108,7 @@
   --dur: 0.7s;
   --dur-fast: 0.25s;
   --ease: cubic-bezier(0.22, 0.68, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);   /* overshoot-free settle, for counters */
 }
 
 /* ---------- 02. Reset & base ---------- */
@@ -307,7 +308,7 @@ button { font: inherit; cursor: pointer; }
    behind the gradient automatically. No file = gradient alone, still intentional. */
 .hero {
   position: relative; overflow: hidden; isolation: isolate;
-  background: linear-gradient(180deg, var(--sky-50) 0%, #fff 100%);
+  background: linear-gradient(165deg, var(--sky-100) 0%, var(--sky-50) 45%, #fff 100%);
   padding: var(--sp-6) 0 var(--sp-7);
 }
 .hero::after {
@@ -316,20 +317,22 @@ button { font: inherit; cursor: pointer; }
   background: url("../assets/photos/hero-bg.jpg") center / cover no-repeat;
   background-image: image-set(url("../assets/photos/hero-bg.webp") type("image/webp"),
                               url("../assets/photos/hero-bg.jpg") type("image/jpeg"));
-  opacity: 0.16;
-  /* fade the photo away behind the text column so the copy stays readable */
-  -webkit-mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
-  mask-image: linear-gradient(100deg, transparent 30%, #000 80%);
+  opacity: 0.42;
+  /* lift the colour out of the photo instead of leaving it washed grey */
+  filter: saturate(1.45) contrast(1.08);
+  /* still fade it back behind the text column so the copy stays readable */
+  -webkit-mask-image: linear-gradient(100deg, transparent 12%, rgba(0,0,0,0.55) 42%, #000 72%);
+  mask-image: linear-gradient(100deg, transparent 12%, rgba(0,0,0,0.55) 42%, #000 72%);
   pointer-events: none;
 }
 .hero::before {
   content: ""; position: absolute; top: -220px; right: -160px; width: 720px; height: 720px; z-index: -1;
-  background: radial-gradient(circle, rgba(25, 110, 207, 0.16), transparent 66%);
+  background: radial-gradient(circle, rgba(25, 110, 207, 0.30), transparent 68%);
   pointer-events: none;
 }
 @media (max-width: 760px) {
   /* on phones the photo competes with the copy — pull it right back */
-  .hero::after { opacity: 0.09; -webkit-mask-image: none; mask-image: none; }
+  .hero::after { opacity: 0.20; -webkit-mask-image: none; mask-image: none; }
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: var(--sp-5); align-items: center; }
 @media (min-width: 1000px) { .hero__inner { grid-template-columns: 1.05fr 0.95fr; gap: var(--sp-6); } }
@@ -497,7 +500,7 @@ button { font: inherit; cursor: pointer; }
 }
 .logo-marquee__track {
   display: flex; align-items: center;
-  gap: clamp(2.75rem, 6vw, 5.5rem);
+  gap: clamp(3rem, 7vw, 6.5rem);
   width: max-content;
   animation: logo-scroll 48s linear infinite;
 }
@@ -508,17 +511,17 @@ button { font: inherit; cursor: pointer; }
 .logo-slot {
   flex: none;
   display: flex; align-items: center; justify-content: center;
-  height: clamp(30px, 3.4vw, 42px);
-  width: clamp(112px, 12vw, 158px);
+  height: clamp(26px, 2.9vw, 36px);
+  width: clamp(104px, 11vw, 146px);
 }
 .logo-marquee img {
   max-width: 100%; max-height: 100%; width: auto; height: auto;
   min-width: 0; min-height: 0;      /* flex items refuse to shrink without this */
   object-fit: contain;
-  opacity: 0.88;
-  transition: opacity var(--dur-fast) var(--ease);
+  opacity: 0.92;
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
-.logo-marquee img:hover { opacity: 1; }
+.logo-marquee img:hover { opacity: 1; transform: scale(1.06); }
 
 @keyframes logo-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
@@ -679,12 +682,22 @@ button { font: inherit; cursor: pointer; }
 .step p { font-size: var(--fs-sm); margin: 0; }
 
 /* ---------- 12. Stats ---------- */
-.stats { background: var(--navy-800); color: #fff; padding: var(--sp-5) 0; }
+.stats {
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 55%, var(--navy-700) 100%);
+  color: #fff; padding: var(--sp-6) 0;
+}
 .stats__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); text-align: center; }
 @media (min-width: 860px) { .stats__list { grid-template-columns: repeat(4, 1fr); } }
 .stat { display: grid; gap: 0.3rem; }
-.stat__num { font-size: clamp(2.2rem, 4.6vw, 3.1rem); font-weight: 700; color: var(--blue-400); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; }
-.stat__label { font-size: var(--fs-xs); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.stat__num {
+  font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 700; color: #fff; line-height: 1;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.04em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.25);
+}
+/* the number scales up as it counts, so the growth is felt and not just read */
+.stat__num { display: inline-block; transform: scale(0.86); opacity: 0; transition: transform 0.7s var(--ease-out), opacity 0.5s var(--ease); }
+.stat__num.is-counting, .stat__num.is-visible { transform: scale(1); opacity: 1; }
+.stat__label { font-size: var(--fs-xs); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
 .stats__note { text-align: center; margin-top: var(--sp-3); font-size: var(--fs-xs); color: rgba(255,255,255,0.3); }
 
 /* ---------- 13. Reviews carousel ---------- */
@@ -886,8 +899,19 @@ button { font: inherit; cursor: pointer; }
   transition: box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
 .post-card:hover { box-shadow: var(--shadow-md); transform: translateY(-5px); border-color: var(--blue-200); }
-.post-card__thumb { aspect-ratio: 16 / 9; display: grid; place-items: center; position: relative; }
-.post-card__thumb span { font-size: 2.6rem; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: -0.05em; }
+/* The thumb now holds a real photo. overflow:hidden + object-fit keeps every
+   card's crop identical regardless of the source aspect ratio. */
+.post-card__thumb {
+  aspect-ratio: 16 / 9; position: relative; overflow: hidden;
+  background: var(--sky-100);
+}
+.post-card__thumb picture, .post-card__thumb img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+}
+.post-card__thumb img {
+  transition: transform 0.6s var(--ease-out);
+}
+.post-card:hover .post-card__thumb img { transform: scale(1.05); }
 .post-card__body { padding: var(--sp-3); display: flex; flex-direction: column; gap: 0.7rem; flex: 1; }
 .post-card__meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; font-size: var(--fs-xs); color: var(--ink-400); }
 .post-card h3 { font-size: 1.2rem; margin: 0; }
@@ -895,12 +919,6 @@ button { font: inherit; cursor: pointer; }
 .post-card h3 a:hover { color: var(--blue-600); }
 .post-card p { font-size: var(--fs-sm); margin: 0; flex: 1; }
 
-.thumb--fl { background: linear-gradient(135deg, #002677, #1565c7); }
-.thumb--tx { background: linear-gradient(135deg, #003da5, #196ecf); }
-.thumb--nv { background: linear-gradient(135deg, #001b54, #1565c7); }
-.thumb--gen { background: linear-gradient(135deg, #12559e, #196ecf); }
-.thumb--cost { background: linear-gradient(135deg, #002677, #007000); }
-.thumb--comp { background: linear-gradient(135deg, #003da5, #ff612b); }
 
 /* article body */
 .article { padding: var(--sp-5) 0 var(--sp-6); }
@@ -1045,3 +1063,27 @@ button { font: inherit; cursor: pointer; }
   .section--dark, .stats, .footer { background: #fff !important; color: #000 !important; }
   .js [data-anim], .js [data-anim] > *, .js .anim-word { opacity: 1 !important; animation: none !important; }
 }
+
+
+/* ---------- 22. Legal pages ---------- */
+.legal { max-width: 72ch; }
+.legal h2 {
+  font-size: clamp(1.2rem, 2vw, 1.45rem); margin-top: var(--sp-5);
+  padding-top: var(--sp-4); border-top: 1px solid var(--line);
+}
+.legal h2:first-of-type { margin-top: var(--sp-4); }
+.legal ul { margin: 0 0 1.1rem; padding-left: 1.15rem; list-style: disc; }
+.legal li { margin-bottom: 0.45rem; }
+.legal em { color: var(--blue-600); font-style: normal; font-weight: 600; }
+.legal__updated { font-size: var(--fs-xs); color: var(--ink-400); margin-bottom: var(--sp-4); }
+/* the template caveat is meant to be noticed, not buried */
+.legal__notice {
+  background: var(--sky-50); border: 1px solid var(--blue-200);
+  border-left: 4px solid var(--blue-500);
+  border-radius: var(--r-md); padding: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-5);
+}
+.legal__notice p { font-size: var(--fs-sm); margin: 0; color: var(--ink-600); }
+.footer__legal-links { font-size: var(--fs-xs); margin-top: 0.4rem; }
+.footer__legal-links a { color: rgba(255,255,255,0.55); }
+.footer__legal-links a:hover { color: #fff; }
+.footer__legal-links span { color: rgba(255,255,255,0.3); margin: 0 0.35rem; }
