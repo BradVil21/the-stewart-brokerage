@@ -170,10 +170,13 @@ button { font: inherit; cursor: pointer; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .skip-link {
-  position: absolute; left: -9999px; top: 0; z-index: 200;
-  background: var(--navy-800); color: #fff; padding: 0.75rem 1.25rem; border-radius: 0 0 var(--r-sm) 0;
+  position: absolute; left: 0; top: 0; transform: translateY(-200%);
+  z-index: 200; background: var(--navy-800); color: #fff;
+  padding: 0.85rem 1.35rem; border-radius: 0 0 var(--r-md) 0;
+  font-weight: 700; font-size: var(--fs-sm);
+  transition: transform 0.2s var(--ease);
 }
-.skip-link:focus { left: 0; color: #fff; }
+.skip-link:focus { transform: translateY(0); color: #fff; }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -1025,6 +1028,16 @@ button { font: inherit; cursor: pointer; }
 .js [data-anim="seq"], .js [data-anim="word"] { opacity: 1; }
 .anim-word { display: inline-block; white-space: pre; }
 
+/* On a phone, fadeinright starts 40px to the right of its final position. For
+   the ~600ms it is animating, the document is 40px wider than the viewport —
+   long enough to trigger a real horizontal scroll under a thumb. Below the
+   drawer breakpoint the horizontal reveals become vertical ones, which can
+   never overflow sideways. */
+@media (max-width: 1024px) {
+  .js [data-anim="right"].is-visible,
+  .js [data-anim="left"].is-visible { animation-name: fadeinup; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .js [data-anim], .js [data-anim] > *, .js .anim-word { opacity: 1 !important; animation: none !important; }
   .step::after { transition: none; }
@@ -1033,16 +1046,41 @@ button { font: inherit; cursor: pointer; }
 
 /* ---------- 21. Responsive ---------- */
 @media (max-width: 1024px) {
+  /* ROOT CAUSE of the broken mobile menu: backdrop-filter on .header makes it
+     a containing block for position:fixed descendants. The drawer lives inside
+     the header, so its top/right/bottom/left resolved against an 85px-tall bar
+     instead of the viewport — it rendered 120px tall with the links cut off,
+     and its off-canvas transform pushed the document 343px wider than the
+     screen, which made phones zoom the whole site out to fit.
+
+     The drawer only exists below this breakpoint, so the frosted effect is
+     dropped here and kept on desktop. A solid bar is more legible on a phone
+     anyway. */
+  .header { backdrop-filter: none; -webkit-backdrop-filter: none; background: #fff; }
+
   .nav-toggle { display: grid; }
   .nav {
     position: fixed; inset: 0 0 0 auto; width: min(88vw, 370px);
     background: #fff; border-left: 1px solid var(--line);
     flex-direction: column; align-items: stretch; justify-content: flex-start;
     gap: var(--sp-3); padding: 5.5rem 1.6rem 2rem;
-    transform: translateX(100%); transition: transform 0.35s var(--ease);
+    /* The drawer must NOT be parked off-canvas. It is position:fixed, so the
+       only thing that can clip it is <html> — and clipping there kills the
+       sticky header. translateX(100%) made the document 390+343=733px wide,
+       which made phones zoom the whole site out to ~53% to fit.
+
+       So it stays at right:0 and is revealed with a clip-path wipe plus a
+       small leftward nudge. clip-path never affects layout or overflow, and
+       the nudge is negative, so nothing can extend past the right edge. */
+    clip-path: inset(0 0 0 100%);
+    transform: translateX(-14px);
+    opacity: 0;
+    visibility: hidden;
+    transition: clip-path 0.38s var(--ease), transform 0.38s var(--ease),
+                opacity 0.26s var(--ease), visibility 0.38s var(--ease);
     box-shadow: var(--shadow-lg); overflow-y: auto; z-index: 110;
   }
-  .nav.is-open { transform: none; }
+  .nav.is-open { clip-path: inset(0 0 0 0); transform: none; opacity: 1; visibility: visible; }
   .nav__list { flex-direction: column; align-items: stretch; gap: 0; }
   .nav__list > li { border-bottom: 1px solid var(--line); }
   .nav__list a { padding: 0.95rem 0; font-size: 1.05rem; }
@@ -1050,7 +1088,16 @@ button { font: inherit; cursor: pointer; }
   .nav__cta .btn { width: 100%; }
   .nav-toggle { position: relative; z-index: 120; }
   body.nav-open { overflow: hidden; }
-  body.nav-open::after { content: ""; position: fixed; inset: 0; background: rgba(7,26,51,0.45); z-index: 105; backdrop-filter: blur(2px); }
+  /* The scrim MUST sit below the header. `.header` is position:sticky with
+     z-index:100, which makes it a stacking context — so the drawer's z-index:110
+     is scoped INSIDE the header and cannot escape 100. A scrim at 105 therefore
+     painted over the whole header, swallowing every tap on the open menu.
+     At 90 it dims the page content and leaves the drawer and toggle live. */
+  body.nav-open::after {
+    content: ""; position: fixed; inset: 0;
+    background: rgba(7, 26, 51, 0.45); backdrop-filter: blur(2px);
+    z-index: 90;
+  }
 }
 @media (max-width: 900px) {
   .service-block__aside { position: static; }
@@ -1175,3 +1222,65 @@ img.review__avatar { border-radius: 50%; object-fit: cover; }
    matching how the rest of the site orders a card. */
 .post-card__body h3 + p { color: var(--ink-600); }
 .post-card__body .post-card__meta { margin-top: auto; padding-top: 0.35rem; }
+
+/* ---------- 25. Mobile refinements ----------
+   Audited at 320 / 360 / 390 / 430 / 768px. Targets here are the WCAG 2.5.8
+   minimum of 24px and Apple's practical 44px, whichever the control warrants. */
+
+/* Touch targets key off the input device, not the screen width — a tablet at
+   768px is still a thumb. `(hover: none)` catches phones and tablets; the
+   width clause keeps a narrow desktop window covered too. */
+@media (hover: none), (max-width: 1024px) {
+  .arrow-link { min-height: 44px; display: inline-flex; align-items: center; }
+  .breadcrumbs { gap: 0.15rem; flex-wrap: wrap; }
+  .breadcrumbs a { padding: 0.75rem 0.2rem; display: inline-block; }
+  .footer__col a,
+  .footer__legal-links a { padding: 0.65rem 0; display: inline-block; }
+  .toc a { padding: 0.7rem 0; display: inline-block; }
+  .compare-table--four thead th a { padding: 0.7rem 0; display: inline-block; }
+  .prose > p a, .prose li a,
+  .legal > p a, .legal li a { padding: 0.5rem 0; display: inline-block; }
+  .contact-list a { padding: 0.5rem 0; display: inline-block; }
+  .post-card h3 a { padding: 0.35rem 0; display: inline-block; }
+  .footer__social a, .topbar__social a { width: 44px; height: 44px; display: grid; place-items: center; }
+  .checkbox input[type="checkbox"] { width: 24px; height: 24px; flex: none; }
+  .checkbox { gap: 0.75rem; align-items: flex-start; padding: 0.35rem 0; }
+  a[href^="mailto:"] { word-break: break-word; }
+
+  /* Legibility floor: nothing under 13px on a touch screen. sr-only text is
+     exempt — it is positioned off-screen and never read by eye. */
+  .state-card__flag { font-size: 0.85rem; }
+  .step__num { font-size: 0.95rem; }
+  .post-card__meta,
+  .carriers__note,
+  .footer__legal-links,
+  .form__note { font-size: 0.8125rem; }
+  .compare-table thead th.is-featured span,
+  .compare-table--four thead th span { font-size: 0.8125rem; letter-spacing: 0.06em; }
+}
+
+@media (max-width: 700px) {
+  /* Nothing below 13px on a phone. sr-only text is exempt — it is never seen. */
+  .state-card__flag { font-size: 0.85rem; }
+  .step__num { font-size: 0.95rem; }
+  .post-card__meta,
+  .carriers__note,
+  .footer__legal-links,
+  .form__note { font-size: 0.8125rem; }
+  .compare-table thead th.is-featured span,
+  .compare-table--four thead th span { font-size: 0.8125rem; letter-spacing: 0.06em; }
+
+  /* Full-width buttons read as buttons on a phone and are far easier to hit. */
+  .hero__actions .btn,
+  .section__foot .btn,
+  .cta-band__actions .btn { width: 100%; }
+  .hero__actions, .cta-band__actions { flex-direction: column; align-items: stretch; }
+
+  /* Tables: let the row labels shrink so more of the data column is visible. */
+  .compare-table--four { min-width: 720px; }
+  .compare-table--four tbody th { white-space: normal; min-width: 120px; }
+}
+
+/* Sticky header offset for in-page anchors, tuned per breakpoint so a jump
+   target never lands underneath the bar. */
+@media (max-width: 700px) { html { scroll-padding-top: 78px; } }
