@@ -25,3 +25,7 @@ Thumbs.db
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+
+# scratch folder used when Claude runs git through the desktop bridge
+# (the bridge cannot delete files, only move them) - safe to delete
+_git_lock_cleanup/
