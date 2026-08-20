@@ -1,138 +1,194 @@
 # The Stewart Brokerage — Website
 
-Marketing site for **The Stewart Brokerage**, a group health insurance brokerage serving business
-owners, professional groups, and medical teams.
+Marketing site for **The Stewart Brokerage**, an independent health insurance brokerage serving
+**small businesses only** in **Florida, Texas, and Nevada**.
 
-Built as a plain static site — no build step, no framework, no dependencies. HTML, CSS, and
-JavaScript live in separate files so each one is easy to find and edit.
+Plain static site — no build step, no framework, no dependencies. HTML, CSS, and JavaScript are in
+separate files.
 
 ---
 
-## Project structure
+## Structure
 
 ```
 the-stewart-brokerage/
-├── index.html          # Home — hero carousel, industries, comparison, services, FAQ
-├── services.html       # Services detail page
-├── contact.html        # Contact page with the full quote-request form
-├── css/
-│   └── styles.css      # All styles (design tokens at the top, sections numbered 01–20)
-├── js/
-│   └── main.js         # All behaviour (numbered modules 01–09)
+├── index.html                  # Home
+├── quote.html                  # ⭐ The quote funnel — every CTA points here
+├── services.html               # Coverage options
+├── blog.html                   # Resources hub
+├── contact.html                # Contact
+├── blog/
+│   ├── small-business-health-insurance-florida.html
+│   ├── small-business-health-insurance-texas.html
+│   ├── small-business-health-insurance-nevada.html
+│   ├── small-business-health-insurance-cost-2026.html
+│   ├── how-many-employees-group-health-plan.html
+│   └── level-funded-vs-fully-insured-small-business.html
+├── css/styles.css              # All styles (tokens at top, sections 01–21)
+├── js/main.js                  # All behaviour (modules 01–10)
 ├── assets/
-│   └── favicon.svg     # Site icon / logo mark
-├── .vscode/
-│   ├── settings.json   # Editor defaults for this project
-│   └── extensions.json # Recommended extensions
-├── .gitignore
-├── package.json
-└── README.md
+│   ├── favicon.svg
+│   └── carriers/               # ⚠️ placeholder logos — see below
+├── robots.txt
+├── sitemap.xml
+└── .vscode/
 ```
 
 ---
 
-## Running it locally
+## Running locally
 
-### Option A — VS Code Live Server (easiest)
+**VS Code Live Server** — right-click `index.html` → *Open with Live Server*.
 
-1. Open this folder in VS Code (`File → Open Folder…`).
-2. When prompted, install the recommended extensions (or search for **Live Server** by Ritwick Dey).
-3. Right-click `index.html` → **Open with Live Server**.
+**Node** — `npm run dev` (serves at `localhost:3000`).
 
-The site opens at `http://127.0.0.1:5500` and reloads on every save.
+**Python** — `python3 -m http.server 3000`.
 
-### Option B — Node
-
-```bash
-npm run dev
-```
-
-Serves the folder at `http://localhost:3000`.
-
-### Option C — Python
-
-```bash
-python3 -m http.server 3000
-```
-
-> Opening `index.html` directly with `file://` mostly works, but a local server is closer to how the
-> site will actually behave once deployed.
+> Use a local server rather than opening the file directly. `file://` breaks the relative paths in
+> `blog/`.
 
 ---
 
-## Before you launch — placeholders to replace
+## ⚠️ Before launch — required replacements
 
-Everything below is intentionally fake. Search the project for these strings and swap them out.
+### 1. Carrier logos (`assets/carriers/`)
 
-| What | Placeholder | Where |
+Every file in there right now is a **grey placeholder wordmark**. Drop the real transparent
+PNG or SVG logos in using these **exact filenames** and the carousel picks them up automatically:
+
+```
+aetna.svg           ambetter.svg        anthem-bcbs.svg
+bluecross-blueshield.svg                cigna.svg
+florida-blue.svg    humana.svg          kaiser-permanente.svg
+molina.svg          oscar.svg           unitedhealthcare.svg
+```
+
+`.png` works too — just change the extension in the `<img src>` tags in `index.html` and
+`services.html`. Use transparent backgrounds; the CSS desaturates them at rest and brings full
+colour back on hover.
+
+**Only display carriers you are actually appointed with.** Showing a carrier logo you cannot
+place business with is a compliance problem in every state, not just a design choice.
+
+### 2. Reviews (`index.html`, `quote.html`, `services.html` — the `.reviews` section)
+
+Every review in there is **fake placeholder text** and is clearly marked as such in an HTML
+comment. So is the "5.0 on Google" badge.
+
+Replace them with real, permissioned reviews before this goes live. Publishing invented reviews as
+genuine is illegal under the FTC Rule on Consumer Reviews and Testimonials (16 CFR Part 465) — the
+penalties are per-violation — and it will get a Google Business Profile suspended.
+
+To pull real reviews automatically, use the Google Places API `place_details` endpoint and render
+the `reviews` array into the same markup.
+
+### 3. Other placeholders
+
+| What | Current value | Where |
 |---|---|---|
-| Phone | `+15550000000` / `+1 (555) 000-0000` | all three HTML files (top bar, nav, footer, CTAs) |
-| Email | `quotes@thestewartbrokerage.com` | footer + contact page |
-| City / state | `Sunrise, Florida` | top bar, footer, contact page |
-| Social links | `href="#"` on LinkedIn / Facebook | top bar + footer |
-| Stats | `data-count` values in the stats section | `index.html` |
-| Enrollment deadline | `data-deadline="2027-01-15T23:59:59"` | `index.html`, countdown block |
-| Map | "Map placeholder" block | `contact.html` |
-| Domain | `https://thestewartbrokerage.com/` in the `og:url` tag | `index.html` |
+| Domain | `https://thestewartbrokerage.com` | `sitemap.xml`, `robots.txt`, every canonical + JSON-LD |
+| Social links | `href="#"` | footer, both icons |
+| "Read more reviews" links | `href="#"` | reviews section |
+| Stats | `data-count` attributes | `index.html` stats section |
 
-Testimonials use initials rather than full names — replace them with real, permissioned quotes
-before going live.
+The email `petrina@thestewartbrokerage.com` is live throughout — no change needed.
 
-### Wiring up the forms
+### 4. Wire up the forms
 
-Forms currently validate client-side and then fake a successful submission (they log to the console).
-To make them real, open `js/main.js`, find **module 08** and replace the `DEMO SUBMISSION` block with a
-POST to your handler. Any of these work with zero backend:
+All forms validate client-side then **fake** a successful submission (they log to the console).
+Open `js/main.js`, find the `deliver()` function in module 08, and replace the demo block with a
+real POST. Zero-backend options:
 
-- [Formspree](https://formspree.io) — change the `<form>` to `action="https://formspree.io/f/XXXX" method="POST"`
-- [Netlify Forms](https://docs.netlify.com/forms/setup/) — add `netlify` to the `<form>` tag
+- [Formspree](https://formspree.io) — swap `deliver()` for a `fetch` to your form endpoint
+- [Netlify Forms](https://docs.netlify.com/forms/setup/) — add `netlify` to each `<form>` tag
 - HubSpot Forms API, or your own endpoint
+
+`deliver()` is shared by the contact form, the newsletter, and the quote funnel, so you only have
+to change it in one place.
+
+---
+
+## The quote funnel (`quote.html`)
+
+This is the conversion page. Every CTA on the site, every blog post, and both inline article CTAs
+route here.
+
+**Nine steps:** industry → team size → state → current coverage → priorities (multi-select) →
+budget → timing → review → contact details.
+
+Notes:
+
+- Radio steps **auto-advance** on selection, and also have a Continue button so nothing dead-ends.
+- Blog CTAs deep-link with `?state=FL` / `?state=TX` / `?state=NV`, which pre-selects the state step.
+- The review step renders a summary of everything chosen so far, and Back preserves all answers.
+- The whole payload is submitted as one object — see `initFunnel()` in `js/main.js`.
+
+To add or reorder a question, copy a `<section class="fstep" data-step="...">` block. The wizard
+counts steps automatically, so the progress bar needs no updating.
+
+---
+
+## SEO
+
+Targeting **small business health insurance** in **Florida, Texas, and Nevada**.
+
+- Unique title + meta description per page, all within display limits
+- Canonical URLs and Open Graph / Twitter Card tags throughout
+- JSON-LD: `InsuranceAgency` (with `areaServed` FL/TX/NV) on the home page, plus `FAQPage`,
+  `BlogPosting`, `BreadcrumbList`, `Service`, `ContactPage`, and `Blog` where relevant
+- One `<h1>` per page, semantic heading hierarchy, descriptive alt text
+- `sitemap.xml` and `robots.txt` at the root
+- Internal linking: state guides ↔ home state cards ↔ quote funnel
+
+**After you deploy:** submit `sitemap.xml` in Google Search Console, and create a Google Business
+Profile — for a local service business that drives more traffic than anything on this list.
 
 ---
 
 ## Design system
 
-Colors, spacing, radii, and shadows are all CSS custom properties defined at the top of
-`css/styles.css` under `:root`. Changing the brand palette is a four-line edit:
+Everything is a CSS custom property at the top of `css/styles.css`. Changing the palette is a
+handful of lines:
 
 ```css
---navy-900: #061428;   /* darkest brand tone — footer, dark sections */
---navy-800: #0a1f3d;   /* primary brand tone — buttons, headings */
---gold-500: #c9a961;   /* accent — CTAs, highlights, underlines */
---tint:     #f4f1ea;   /* alternating section background */
+--navy-800: #0b2545;   /* headings, footer, dark bands */
+--blue-500: #2e7df6;   /* buttons, links, accents      */
+--sky-50:   #f5f9ff;   /* alternating section bg       */
+--amber-500:#ffb020;   /* star ratings                 */
 ```
 
-Type is **Fraunces** (display) + **Inter** (body), loaded from Google Fonts.
+Type is **DM Sans**, loaded from Google Fonts.
 
 ## Features
 
-- Sticky header with a slide-in mobile drawer (Escape / click-outside / link-click all close it)
-- Auto-playing hero carousel — pauses on hover, focus, and when the tab is hidden; arrow-key and
-  swipe support
-- Live open-enrollment countdown driven by one `data-deadline` attribute
-- Scroll-triggered reveal animations and animated stat counters via `IntersectionObserver`
-- Single-open FAQ accordion with proper `aria-expanded` / `aria-controls`
-- Accessible client-side form validation with inline, per-field error messages
-- Full `prefers-reduced-motion` support — every animation is disabled when the OS asks for it
-- Skip link, visible focus rings, semantic landmarks, and a print stylesheet
+- Sticky header that shrinks on scroll, slide-in mobile drawer (Esc / click-outside / link closes)
+- Nine-step quote wizard with progress bar, validation, and a review step
+- Auto-scrolling carrier logo carousel and draggable reviews carousel
+- Scroll reveal animations with word-by-word headings and staggered grids
+- Accessible client-side validation with inline per-field errors
+- Full `prefers-reduced-motion` support and a print stylesheet
+- Skip link, visible focus rings, semantic landmarks, ARIA on all interactive components
+
+**Reveal animations fail open.** Hidden state uses `opacity`, not `visibility`, and `main.js` runs a
+6-second safety sweep plus a `hashchange` handler — so content can never get stuck invisible if an
+IntersectionObserver misses.
 
 ## Browser support
 
-Modern evergreen browsers (Chrome, Edge, Firefox, Safari). Uses `IntersectionObserver`,
-CSS custom properties, `backdrop-filter`, and CSS Grid.
+Modern evergreen browsers. Uses IntersectionObserver, CSS custom properties, `backdrop-filter`,
+CSS Grid, and `:has()` (progressive enhancement only — nothing breaks without it).
 
 ---
 
 ## Deploying
 
-Any static host works. No build step required — point it at the repository root.
+Any static host. No build step; point it at the repository root.
 
-- **GitHub Pages** — repo *Settings → Pages → Source: Deploy from a branch → `main` / root*
-- **Netlify** — drag the folder in, or connect the repo; leave the build command empty and set the
-  publish directory to `/`
-- **Vercel** — import the repo and select "Other" as the framework preset
-- **Cloudflare Pages** — connect the repo, no build command, output directory `/`
+- **GitHub Pages** — *Settings → Pages → Deploy from a branch → `main` / root*
+- **Netlify / Vercel / Cloudflare Pages** — connect the repo, no build command, output directory `/`
 
 ---
 
-© The Stewart Brokerage. This site is for informational purposes and is not a contract of insurance.
+© The Stewart Brokerage. This site is for general information only and is not a contract of
+insurance. Plan availability, eligibility, benefits and pricing vary by carrier, state, group size
+and effective date.

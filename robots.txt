@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# No crawl-blocking — this is a marketing site and we want every page indexed.
+Sitemap: https://thestewartbrokerage.com/sitemap.xml
