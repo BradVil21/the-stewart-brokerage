@@ -139,9 +139,12 @@
              Until then a labelled placeholder renders in its place — see initPhotoSlots() in js/main.js. -->
         <div class="hero__media" data-anim="right">
           <figure class="photo photo--hero" data-photo="Team / office photo — 4:3 landscape">
+            <picture>
+            <source srcset="assets/photos/hero-team.webp" type="image/webp" />
             <img src="assets/photos/hero-team.jpg"
                  alt="Small business owner reviewing group health plan options with a benefits advisor"
-                 width="1200" height="900" fetchpriority="high" />
+                 width="1200" height="900" fetchpriority="high" decoding="async" />
+          </picture>
           </figure>
 
           <aside class="hero__card" aria-label="Example plan review">
@@ -213,9 +216,12 @@
         <aside class="whyaside" data-anim="right">
           <!-- PHOTO SLOT: assets/photos/advisor.jpg — portrait or square, 900px+ wide -->
           <figure class="photo photo--tall" data-photo="Advisor / team portrait — 4:5 portrait">
+            <picture>
+            <source srcset="assets/photos/advisor.webp" type="image/webp" />
             <img src="assets/photos/advisor.jpg"
                  alt="Petrina Stewart, licensed health insurance broker for small businesses in Florida, Texas and Nevada"
-                 width="900" height="1125" loading="lazy" />
+                 width="900" height="1125" loading="lazy" decoding="async" />
+          </picture>
           </figure>
 
           <div class="whyaside__panel">
@@ -366,7 +372,10 @@
             <p class="lead">From the first form to employees carrying ID cards. You are talking to one licensed broker the whole way through — not a queue, not a chatbot, not a different rep every time.</p>
           </header>
           <figure class="photo photo--wide" data-photo="Team meeting" data-anim="right">
-            <img src="assets/photos/process.jpg" alt="A small business team reviewing group health plan options together in a meeting" width="1400" height="933" loading="lazy" />
+            <picture>
+            <source srcset="assets/photos/process.webp" type="image/webp" />
+            <img src="assets/photos/process.jpg" alt="A small business team reviewing group health plan options together in a meeting" width="1400" height="933" loading="lazy" decoding="async" />
+          </picture>
           </figure>
         </div>
         <ol class="steps">
@@ -417,7 +426,10 @@
       <div class="container">
         <div class="reviews__intro">
           <figure class="photo photo--tall reviews__portrait" data-photo="Client portrait" data-anim="block">
-            <img src="assets/photos/client.jpg" alt="Small business owner at her workplace after switching group health plans" width="900" height="1125" loading="lazy" />
+            <picture>
+            <source srcset="assets/photos/client.webp" type="image/webp" />
+            <img src="assets/photos/client.jpg" alt="Small business owner at her workplace after switching group health plans" width="900" height="1125" loading="lazy" decoding="async" />
+          </picture>
           </figure>
           <div class="reviews__introText">
             <header class="reviews__head" data-anim="block">
