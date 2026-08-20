@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=20260820h" />
+  <link rel="stylesheet" href="css/styles.css?v=20260820i" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -85,12 +85,86 @@
         <p>Four routes, one broker. We quote all of them so you can see the real trade-offs side by side instead of taking one carrier's word for it.</p>
       </div>
     </section>
-    <figure class="photo photo--banner container" data-anim="block">
-      <picture>
-        <source srcset="assets/photos/services.webp" type="image/webp" />
-        <img src="assets/photos/services.jpg" alt="Two supervisors reviewing progress on a small commercial build, the kind of business The Stewart Brokerage places group coverage for" width="1300" height="866" loading="lazy" decoding="async" />
-      </picture>
-    </figure>
+    <!-- The real job of this page: which of the four fits me? Answer that first,
+         then let people jump to the detail they care about. -->
+    <section class="section chooser" id="compare">
+      <div class="container">
+        <header class="section__head section__head--center" data-anim="block">
+          <p class="eyebrow">Start here</p>
+          <h2>Which one fits your business?</h2>
+          <p class="lead">The honest trade-offs, side by side. Every row is something owners actually ask about.</p>
+        </header>
+
+        <div class="table-wrap" data-anim="block">
+          <table class="compare-table compare-table--four">
+            <caption class="sr-only">Comparison of fully-insured, level-funded, ICHRA and supplemental coverage</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="rowhead"><span class="sr-only">Feature</span></th>
+                <th scope="col"><a href="#fully-insured">Fully-Insured</a><span>Traditional</span></th>
+                <th scope="col"><a href="#level-funded">Level-Funded</a><span>Money back</span></th>
+                <th scope="col"><a href="#hra">ICHRA / QSEHRA</a><span>Fixed budget</span></th>
+                <th scope="col"><a href="#supplemental">Supplemental</a><span>Add-on</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Best for</th>
+                <td>Teams that want zero surprises</td>
+                <td>Younger, healthier teams of 5–50</td>
+                <td>Multi-state or remote teams</td>
+                <td>Rounding out any of the three</td>
+              </tr>
+              <tr>
+                <th scope="row">Monthly cost</th>
+                <td>Fixed for the plan year</td>
+                <td>Level, with a possible refund</td>
+                <td>Exactly what you set</td>
+                <td>Low, often employee-paid</td>
+              </tr>
+              <tr>
+                <th scope="row">Money back if claims are low</th>
+                <td><span class="mark mark--no"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></span>No</td>
+                <td><span class="mark mark--yes"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>Yes</td>
+                <td><span class="mark mark--warn"><svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01"/></svg></span>Unspent budget stays</td>
+                <td><span class="mark mark--no"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></span>No</td>
+              </tr>
+              <tr>
+                <th scope="row">Works across state lines</th>
+                <td><span class="mark mark--warn"><svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01"/></svg></span>With a PPO network</td>
+                <td><span class="mark mark--warn"><svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01"/></svg></span>With a PPO network</td>
+                <td><span class="mark mark--yes"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>Built for it</td>
+                <td><span class="mark mark--yes"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Admin on your side</th>
+                <td>Lowest</td>
+                <td>Low</td>
+                <td>Moderate — we run it</td>
+                <td>Lowest</td>
+              </tr>
+              <tr>
+                <th scope="row">Renewal risk</th>
+                <td>Rate increase each year</td>
+                <td>Tied to your own claims</td>
+                <td><span class="mark mark--yes"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>None — you set the number</td>
+                <td>Minimal</td>
+              </tr>
+              <tr>
+                <th scope="row">Employee keeps it if they leave</th>
+                <td><span class="mark mark--no"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></span>No</td>
+                <td><span class="mark mark--no"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></span>No</td>
+                <td><span class="mark mark--yes"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>Yes</td>
+                <td>Varies by product</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="chooser__note" data-anim="block">Most of our clients end up somewhere between the first two. We quote all four regardless, because the only way to know is to see your own numbers.</p>
+      </div>
+    </section>
+
 
 
     <section class="section">
@@ -98,10 +172,10 @@
         <article class="service-block" id="fully-insured">
           <div class="service-block__aside" data-anim="block">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20ZM3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"/></svg></span>
-            <p class="eyebrow" style="margin-top:1rem">Coverage</p>
+            <p class="eyebrow service-block__kicker">Coverage</p>
             <h2>Fully-Insured Group Plans</h2>
             <p class="lead">The traditional small-group plan — a fixed premium, and the carrier carries all the risk.</p>
-            <a class="btn btn--primary" href="quote.html" style="margin-top:1rem">Quote this option</a>
+            <a class="btn btn--primary service-block__cta" href="quote.html">Quote this option</a>
           </div>
           <div data-anim="block">
             <p>This is the option most owners picture when they think of company health insurance. You pick a plan, you pay a set premium each month, and the carrier handles every claim. Nothing is unpredictable, which is exactly why plenty of small businesses stay here.</p>
@@ -112,13 +186,13 @@
             </ul>
           </div>
         </article>
-        <article class="service-block" id="level-funded">
+        <article class="service-block service-block--flip" id="level-funded">
           <div class="service-block__aside" data-anim="block">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M7 17V9M12 17V5M17 17v-6"/></svg></span>
-            <p class="eyebrow" style="margin-top:1rem">Savings</p>
+            <p class="eyebrow service-block__kicker">Savings</p>
             <h2>Level-Funded Health Plans</h2>
             <p class="lead">A steady monthly payment — with money back if your team's claims come in low.</p>
-            <a class="btn btn--primary" href="quote.html" style="margin-top:1rem">Quote this option</a>
+            <a class="btn btn--primary service-block__cta" href="quote.html">Quote this option</a>
           </div>
           <div data-anim="block">
             <p>Level-funded sits between fully-insured and self-funded. You pay a level monthly amount that covers claims, admin, and stop-loss insurance. If your group is healthy and claims run under projection, a share of the surplus comes back to you at year end. For a young, healthy team of 5 to 50, this is often where the real savings are hiding.</p>
@@ -132,10 +206,10 @@
         <article class="service-block" id="hra">
           <div class="service-block__aside" data-anim="block">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01"/></svg></span>
-            <p class="eyebrow" style="margin-top:1rem">Flexibility</p>
+            <p class="eyebrow service-block__kicker">Flexibility</p>
             <h2>ICHRA &amp; QSEHRA</h2>
             <p class="lead">Give employees a tax-free monthly allowance to buy their own coverage.</p>
-            <a class="btn btn--primary" href="quote.html" style="margin-top:1rem">Quote this option</a>
+            <a class="btn btn--primary service-block__cta" href="quote.html">Quote this option</a>
           </div>
           <div data-anim="block">
             <p>Instead of choosing one plan for everybody, you set a budget and each employee buys the individual plan that suits them. The allowance is tax-free to them and tax-deductible to you. This is the cleanest answer for teams spread across Florida, Texas, and Nevada, or any business that wants a benefits number that never moves.</p>
@@ -146,13 +220,13 @@
             </ul>
           </div>
         </article>
-        <article class="service-block" id="supplemental">
+        <article class="service-block service-block--flip" id="supplemental">
           <div class="service-block__aside" data-anim="block">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6l-8-3Z"/></svg></span>
-            <p class="eyebrow" style="margin-top:1rem">Protection</p>
+            <p class="eyebrow service-block__kicker">Protection</p>
             <h2>Dental, Vision &amp; Supplemental</h2>
             <p class="lead">The coverage that fills the gaps a medical plan leaves open.</p>
-            <a class="btn btn--primary" href="quote.html" style="margin-top:1rem">Quote this option</a>
+            <a class="btn btn--primary service-block__cta" href="quote.html">Quote this option</a>
           </div>
           <div data-anim="block">
             <p>Dental, vision, life, accident, critical illness, and short-term disability — offered as employer-paid or voluntary. Quoted and administered alongside your medical plan so there is one enrollment, one renewal date, and one person to call.</p>
@@ -292,6 +366,6 @@
     <svg class="to-top__ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
   </button>
 
-  <script src="js/main.js?v=20260820h" defer></script>
+  <script src="js/main.js?v=20260820i" defer></script>
 </body>
 </html>
