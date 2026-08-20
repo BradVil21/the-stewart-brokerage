@@ -1,0 +1,17 @@
+{
+  "name": "the-stewart-brokerage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing site for The Stewart Brokerage — group health coverage for business owners, professional groups, and medical teams.",
+  "scripts": {
+    "dev": "npx --yes serve . -l 3000",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "insurance",
+    "group-health",
+    "brokerage",
+    "static-site"
+  ],
+  "license": "UNLICENSED"
+}

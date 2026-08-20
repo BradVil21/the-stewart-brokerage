@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.rulers": [100],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "emmet.includeLanguages": { "html": "html" },
+  "html.format.wrapLineLength": 0,
+  "css.lint.unknownAtRules": "ignore",
+  "liveServer.settings.root": "/",
+  "liveServer.settings.port": 5500,
+  "search.exclude": {
+    "**/node_modules": true
+  }
+}
