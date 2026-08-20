@@ -1,20 +1,21 @@
 /* ==========================================================================
    The Stewart Brokerage — main.js
    --------------------------------------------------------------------------
-   Vanilla JS, no dependencies. Each feature is an isolated init() that
-   safely no-ops when its markup isn't on the page, so this one file can be
-   shared across index.html, services.html and contact.html.
+   Vanilla JS, no dependencies. Each feature is an isolated init() that safely
+   no-ops when its markup isn't on the page, so this one file is shared across
+   index.html, services.html and contact.html.
 
    Modules
    01. helpers
-   02. mobile navigation
-   03. sticky header shadow
-   04. hero carousel
-   05. enrollment countdown
-   06. scroll reveal + animated stat counters
-   07. FAQ accordion
-   08. form validation & submission
-   09. back-to-top + footer year
+   02. reveal engine  (block / seq / word — matches the reference site's motion)
+   03. mobile navigation
+   04. sticky header
+   05. hero carousel
+   06. enrollment countdown
+   07. stat counters
+   08. FAQ accordion
+   09. form validation & submission
+   10. back-to-top + footer year
    ========================================================================== */
 
 (function () {
@@ -23,9 +24,134 @@
   /* ---------- 01. helpers ---------- */
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- 02. mobile navigation ---------- */
+  // Marks the document as JS-capable. The CSS only hides pre-animation content
+  // under `.js`, so with JavaScript off everything stays visible.
+  document.documentElement.classList.add('js');
+
+  /* ---------- 02. reveal engine ----------
+     Motion spec lifted from the reference design:
+       travel   60px
+       duration 0.75s
+       easing   ease
+     Three orchestration modes, set via data-anim:
+       block  — the element fades up as one unit
+       fade   — opacity only
+       left / right — horizontal entrance
+       seq    — direct children stagger in
+       word   — heading animates word by word
+  --------------------------------------------------------------------------- */
+  const STAGGER_SEQ = 120;   // ms between sequential children
+  const STAGGER_WORD = 45;   // ms between words
+
+  function prepareWordAnimation(el) {
+    if (el.dataset.animPrepared) return;
+    // Walk text nodes only, so inline markup (<em>, <span class="accent">) survives.
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) {
+      if (walker.currentNode.nodeValue.trim()) textNodes.push(walker.currentNode);
+    }
+    textNodes.forEach((node) => {
+      const frag = document.createDocumentFragment();
+      node.nodeValue.split(/(\s+)/).forEach((chunk) => {
+        if (!chunk) return;
+        if (/^\s+$/.test(chunk)) { frag.appendChild(document.createTextNode(chunk)); return; }
+        const span = document.createElement('span');
+        span.className = 'anim-word';
+        span.textContent = chunk;
+        frag.appendChild(span);
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+    $$('.anim-word', el).forEach((w, i) => {
+      w.style.setProperty('--d', (i * STAGGER_WORD) + 'ms');
+    });
+    el.dataset.animPrepared = '1';
+  }
+
+  function prepareSequence(el) {
+    if (el.dataset.animPrepared) return;
+    Array.from(el.children).forEach((child, i) => {
+      child.style.setProperty('--d', (i * STAGGER_SEQ) + 'ms');
+    });
+    el.dataset.animPrepared = '1';
+  }
+
+  function initReveal() {
+    const items = $$('[data-anim], .step, .stat__num');
+    if (!items.length) return;
+
+    // Pre-split words / assign stagger delays before anything becomes visible.
+    $$('[data-anim="word"]').forEach(prepareWordAnimation);
+    $$('[data-anim="seq"]').forEach(prepareSequence);
+
+    const showAll = () => items.forEach((el) => {
+      el.classList.add('is-visible');
+      if (el.dataset.count) el.textContent = el.dataset.count + (el.dataset.suffix || '');
+    });
+
+    if (reduceMotion || !('IntersectionObserver' in window)) { showAll(); return; }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.classList.add('is-visible');
+        if (el.dataset.count) countUp(el);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+    items.forEach((el) => io.observe(el));
+
+    const reveal = (el) => {
+      if (el.classList.contains('is-visible')) return;
+      el.classList.add('is-visible');
+      if (el.dataset.count) countUp(el);
+      io.unobserve(el);
+    };
+
+    // Anything already in view on load reveals immediately rather than waiting
+    // for a scroll event — matters for the hero on short viewports.
+    requestAnimationFrame(() => {
+      items.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) reveal(el);
+      });
+    });
+
+    // Landing on an in-page anchor (e.g. /index.html#faq) skips past sections
+    // without ever scrolling through them, so reveal whatever is on screen.
+    const revealInView = () => items.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) reveal(el);
+    });
+    window.addEventListener('hashchange', () => setTimeout(revealInView, 100));
+    window.addEventListener('load', revealInView);
+
+    // Safety net. If an observer never fires — a stale browser, an oddly sized
+    // viewport, a print stylesheet — content must not stay invisible forever.
+    window.setTimeout(() => items.forEach(reveal), 6000);
+  }
+
+  function countUp(el) {
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+    const target = parseFloat(el.dataset.count) || 0;
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+    (function frame(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+      if (p < 1) requestAnimationFrame(frame);
+    })(start);
+  }
+
+  /* ---------- 03. mobile navigation ---------- */
   function initNav() {
     const toggle = $('#navToggle');
     const nav = $('#nav');
@@ -38,45 +164,35 @@
       document.body.classList.toggle('nav-open', open);
     };
 
-    toggle.addEventListener('click', () => {
-      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-    });
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
 
-    // close on link click (mobile) and on Escape
     nav.addEventListener('click', (e) => {
       if (e.target.closest('a') && window.innerWidth <= 1024) setOpen(false);
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-        setOpen(false);
-        toggle.focus();
-      }
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false); toggle.focus(); }
     });
 
-    // click outside to close
     document.addEventListener('click', (e) => {
       if (!nav.classList.contains('is-open')) return;
       if (nav.contains(e.target) || toggle.contains(e.target)) return;
       setOpen(false);
     });
 
-    // reset state when resizing up to desktop
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1024) setOpen(false);
-    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 1024) setOpen(false); });
   }
 
-  /* ---------- 03. sticky header shadow ---------- */
+  /* ---------- 04. sticky header ---------- */
   function initStickyHeader() {
     const header = $('#header');
     if (!header) return;
-    const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 8);
+    const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 10);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  /* ---------- 04. hero carousel ---------- */
+  /* ---------- 05. hero carousel ---------- */
   function initHero() {
     const wrap = $('#heroSlides');
     if (!wrap) return;
@@ -91,7 +207,6 @@
     let timer = null;
     const DELAY = 7000;
 
-    // build dots
     const dots = slides.map((_, i) => {
       const b = document.createElement('button');
       b.className = 'hero__dot';
@@ -107,8 +222,8 @@
       index = (i + slides.length) % slides.length;
       slides.forEach((s, n) => {
         const active = n === index;
-        s.classList.toggle('is-active', active);
         s.hidden = !active;
+        if (active) replay(s);
       });
       dots.forEach((d, n) => {
         d.classList.toggle('is-active', n === index);
@@ -116,29 +231,34 @@
       });
     }
 
-    function start() {
-      if (prefersReducedMotion) return;
-      timer = window.setInterval(() => go(index + 1), DELAY);
+    // Re-trigger the reveal animation each time a slide comes back into view,
+    // so slide 2 and 3 animate in the same way slide 1 did on load.
+    function replay(slide) {
+      if (reduceMotion) return;
+      $$('[data-anim]', slide).forEach((el) => {
+        el.classList.remove('is-visible');
+        void el.offsetWidth; // force reflow so the animation restarts
+        el.classList.add('is-visible');
+      });
     }
+
+    function start() { if (!reduceMotion) timer = window.setInterval(() => go(index + 1), DELAY); }
     function stop() { window.clearInterval(timer); }
     function restart() { stop(); start(); }
 
     prev && prev.addEventListener('click', () => { go(index - 1); restart(); });
     next && next.addEventListener('click', () => { go(index + 1); restart(); });
 
-    // pause on hover / when tab hidden
     wrap.addEventListener('mouseenter', stop);
     wrap.addEventListener('mouseleave', start);
     wrap.addEventListener('focusin', stop);
     document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
 
-    // keyboard arrows
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') { go(index - 1); restart(); }
       if (e.key === 'ArrowRight') { go(index + 1); restart(); }
     });
 
-    // touch swipe
     let startX = null;
     wrap.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
     wrap.addEventListener('touchend', (e) => {
@@ -152,7 +272,7 @@
     start();
   }
 
-  /* ---------- 05. enrollment countdown ---------- */
+  /* ---------- 06. enrollment countdown ---------- */
   function initCountdown() {
     const box = $('#countdown');
     if (!box) return;
@@ -173,6 +293,8 @@
       if (diff <= 0) {
         Object.values(out).forEach((el) => el && (el.textContent = '00'));
         box.classList.add('is-expired');
+        const note = $('#countdownNote');
+        if (note) note.textContent = 'Open enrollment has ended — ask us about Special Enrollment options.';
         window.clearInterval(id);
         return;
       }
@@ -187,48 +309,7 @@
     const id = window.setInterval(tick, 1000);
   }
 
-  /* ---------- 06. scroll reveal + stat counters ---------- */
-  function initReveal() {
-    const items = $$('.reveal, .step, .stat__num');
-    if (!items.length) return;
-
-    if (!('IntersectionObserver' in window) || prefersReducedMotion) {
-      items.forEach((el) => {
-        el.classList.add('is-visible');
-        if (el.dataset.count) el.textContent = el.dataset.count + (el.dataset.suffix || '');
-      });
-      return;
-    }
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        el.classList.add('is-visible');
-        if (el.dataset.count) countUp(el);
-        io.unobserve(el);
-      });
-    }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
-
-    items.forEach((el) => io.observe(el));
-  }
-
-  function countUp(el) {
-    const target = parseFloat(el.dataset.count) || 0;
-    const suffix = el.dataset.suffix || '';
-    const duration = 1600;
-    const startTime = performance.now();
-
-    function frame(now) {
-      const p = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
-      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
-      if (p < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
-
-  /* ---------- 07. FAQ accordion ---------- */
+  /* ---------- 08. FAQ accordion ---------- */
   function initAccordion() {
     const items = $$('.acc');
     if (!items.length) return;
@@ -247,7 +328,6 @@
       btn.addEventListener('click', () => {
         const isOpen = btn.getAttribute('aria-expanded') === 'true';
 
-        // close siblings (single-open accordion)
         items.forEach((other) => {
           if (other === item) return;
           const ob = $('.acc__btn', other);
@@ -262,16 +342,13 @@
         panel.style.height = isOpen ? '0px' : panel.scrollHeight + 'px';
       });
 
-      // keep an open panel correctly sized on resize
       window.addEventListener('resize', () => {
-        if (btn.getAttribute('aria-expanded') === 'true') {
-          panel.style.height = panel.scrollHeight + 'px';
-        }
+        if (btn.getAttribute('aria-expanded') === 'true') panel.style.height = panel.scrollHeight + 'px';
       });
     });
   }
 
-  /* ---------- 08. form validation & submission ---------- */
+  /* ---------- 09. form validation & submission ---------- */
   const RULES = {
     required: (v) => v.trim().length > 0,
     email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
@@ -279,9 +356,9 @@
   };
 
   function fieldError(input, message) {
-    const wrap = input.closest('.field') || input.closest('.checkbox')?.parentElement;
+    const wrap = input.closest('.field');
     const slot = document.querySelector(`[data-error-for="${input.id}"]`);
-    if (wrap && wrap.classList) wrap.classList.toggle('is-invalid', Boolean(message));
+    if (wrap) wrap.classList.toggle('is-invalid', Boolean(message));
     if (slot) slot.textContent = message || '';
     if (message) input.setAttribute('aria-invalid', 'true');
     else input.removeAttribute('aria-invalid');
@@ -294,15 +371,9 @@
       if (input.required && !input.checked) { fieldError(input, 'Please tick this box to continue.'); return false; }
       fieldError(input, ''); return true;
     }
-    if (input.required && !RULES.required(input.value)) {
-      fieldError(input, `${label} is required.`); return false;
-    }
-    if (input.type === 'email' && input.value && !RULES.email(input.value)) {
-      fieldError(input, 'Enter a valid email address.'); return false;
-    }
-    if (input.type === 'tel' && !RULES.phone(input.value)) {
-      fieldError(input, 'Enter a valid phone number.'); return false;
-    }
+    if (input.required && !RULES.required(input.value)) { fieldError(input, `${label} is required.`); return false; }
+    if (input.type === 'email' && input.value && !RULES.email(input.value)) { fieldError(input, 'Enter a valid email address.'); return false; }
+    if (input.type === 'tel' && !RULES.phone(input.value)) { fieldError(input, 'Enter a valid phone number.'); return false; }
     fieldError(input, '');
     return true;
   }
@@ -313,7 +384,7 @@
 
     forms.forEach((form) => {
       const inputs = $$('input, select, textarea', form);
-      const statusEl = document.getElementById(form.id + 'Status')
+      const statusEl = document.getElementById(form.id.replace(/Form$/, '') + 'Status')
         || form.parentElement?.querySelector('.form__status');
 
       inputs.forEach((input) => {
@@ -327,24 +398,18 @@
         e.preventDefault();
 
         const results = inputs.map(validateInput);
-        const firstBad = inputs[results.indexOf(false)];
-
         if (results.includes(false)) {
-          if (statusEl) {
-            statusEl.textContent = 'Please fix the highlighted fields.';
-            statusEl.className = 'form__status is-err';
-          }
+          if (statusEl) { statusEl.textContent = 'Please fix the highlighted fields.'; statusEl.className = 'form__status is-err'; }
+          const firstBad = inputs[results.indexOf(false)];
           firstBad && firstBad.focus();
           return;
         }
 
         // ------------------------------------------------------------------
-        // DEMO SUBMISSION
-        // There is no backend wired up yet. Replace the block below with a
-        // real POST to your form handler (Formspree, Netlify Forms, HubSpot,
-        // your own API, etc.). Example:
+        // DEMO SUBMISSION — no backend is wired up yet.
+        // Replace this block with a real POST to your form handler
+        // (Formspree, Netlify Forms, HubSpot, your own API). Example:
         //
-        //   const data = Object.fromEntries(new FormData(form).entries());
         //   const res = await fetch('https://your-endpoint', {
         //     method: 'POST',
         //     headers: { 'Content-Type': 'application/json' },
@@ -371,16 +436,14 @@
     });
   }
 
-  /* ---------- 09. back-to-top + year ---------- */
+  /* ---------- 10. back-to-top + year ---------- */
   function initToTop() {
     const btn = $('#toTop');
     if (!btn) return;
     const onScroll = () => btn.classList.toggle('is-visible', window.scrollY > 500);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    btn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    });
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
   }
 
   function initYear() {
@@ -401,9 +464,6 @@
     initYear();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();

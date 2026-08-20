@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Stewart Brokerage | Group Health Coverage Built Around Your Team</title>
   <meta name="description" content="The Stewart Brokerage designs nationwide PPO group health plans for business owners, professional groups, and medical teams. Competitive premiums, low deductibles, and concierge service all year long." />
-  <meta name="theme-color" content="#0A1F3D" />
+  <meta name="theme-color" content="#064259" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="The Stewart Brokerage | Group Health Coverage Built Around Your Team" />
   <meta property="og:description" content="Stop overpaying for underwhelming health coverage. Tailored group plans, nationwide PPO access, and a broker who answers the phone." />
   <meta property="og:type" content="website" />
@@ -16,7 +15,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -29,7 +28,7 @@
       <ul class="topbar__meta">
         <li>
           <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
-          Mon–Fri 8:00–18:00 &middot; Sun 8:00–14:00
+          Mon – Fri 8:00 – 18:00 / Sunday 8:00 – 14:00
         </li>
         <li class="hide-sm">
           <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21s7-5.686 7-11a7 7 0 1 0-14 0c0 5.314 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -66,16 +65,21 @@
 
       <nav class="nav" id="nav" aria-label="Primary">
         <ul class="nav__list">
-          <li><a class="is-active" href="index.html">Home</a></li>
+          <li><a class="is-active" href="index.html">Homepage</a></li>
           <li><a href="services.html">Services</a></li>
           <li><a href="index.html#industries">Industries</a></li>
           <li><a href="index.html#compare">Why Us</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
         </ul>
         <div class="nav__cta">
-          <a class="btn btn--ghost" href="tel:+15550000000">Call Now</a>
-          <a class="btn btn--primary" href="contact.html">Get Quotes</a>
+          <a class="btn btn--dark btn--sm" href="services.html">
+            <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9.5 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM19 8v6M22 11h-6"/></svg>
+            Group Plans
+          </a>
+          <a class="btn btn--blue btn--sm" href="tel:+15550000000">
+            <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2Z"/></svg>
+            Call Now
+          </a>
         </div>
       </nav>
 
@@ -87,111 +91,95 @@
 
   <main id="main">
 
-    <!-- ============ HERO CAROUSEL ============ -->
+    <!-- ============ HERO ============ -->
     <section class="hero" aria-roledescription="carousel" aria-label="Highlights">
       <div class="hero__bg" aria-hidden="true"></div>
-      <div class="container hero__inner">
+      <div class="hero__inner">
         <div class="hero__grid">
 
-        <div class="hero__col">
-        <div class="hero__slides" id="heroSlides">
-          <article class="hero__slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
-            <p class="eyebrow">Group coverage, done properly</p>
-            <h1>Get personalized group coverage <em>today</em>.</h1>
-            <p class="hero__lede">Built for business owners, professional groups, and medical teams who are ready to stop overpaying for underwhelming health coverage. We help you find tailored coverage built around you — not around a template.</p>
-            <div class="hero__actions">
-              <a class="btn btn--primary btn--lg" href="contact.html">Get Quotes</a>
-              <a class="btn btn--outline btn--lg" href="#services">See our services</a>
+          <div>
+            <div class="hero__slides" id="heroSlides">
+
+              <article class="hero__slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+                <h1 data-anim="word">Get personalized group coverage <span class="accent">today</span></h1>
+                <p class="hero__lede" data-anim="block">Built for business owners, professional groups, and medical teams who are ready to stop overpaying for underwhelming health coverage. We help you find <strong>tailored coverage built around you.</strong></p>
+                <div class="hero__actions" data-anim="seq">
+                  <a class="btn btn--teal btn--lg" href="contact.html">
+                    <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9.5 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM19 8v6M22 11h-6"/></svg>
+                    Get Quotes
+                  </a>
+                  <a class="btn btn--outline btn--lg" href="#services">See Our Services</a>
+                </div>
+              </article>
+
+              <article class="hero__slide" role="group" aria-roledescription="slide" aria-label="2 of 3" hidden>
+                <h1 data-anim="word">Service built on trust, proven by <span class="accent">results</span></h1>
+                <p class="hero__lede" data-anim="block">We're not just selling plans — we're building lasting relationships. Backed by a national carrier network and agents who actually answer the phone, we make sure <strong>your coverage works when it matters most.</strong></p>
+                <div class="hero__actions" data-anim="seq">
+                  <a class="btn btn--teal btn--lg" href="contact.html">
+                    <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9.5 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM19 8v6M22 11h-6"/></svg>
+                    Get Quotes
+                  </a>
+                  <a class="btn btn--outline btn--lg" href="#testimonials">Read Client Stories</a>
+                </div>
+              </article>
+
+              <article class="hero__slide" role="group" aria-roledescription="slide" aria-label="3 of 3" hidden>
+                <h1 data-anim="word">Better benefits are a hiring <span class="accent">advantage</span></h1>
+                <p class="hero__lede" data-anim="block">The right plan does more than control cost. It helps you win the candidates you want, keep the people you have, and <strong>stop losing talent to bigger competitors.</strong></p>
+                <div class="hero__actions" data-anim="seq">
+                  <a class="btn btn--teal btn--lg" href="contact.html">
+                    <svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M17 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9.5 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM19 8v6M22 11h-6"/></svg>
+                    Get Quotes
+                  </a>
+                  <a class="btn btn--outline btn--lg" href="#compare">Compare Your Options</a>
+                </div>
+              </article>
+
             </div>
-          </article>
 
-          <article class="hero__slide" role="group" aria-roledescription="slide" aria-label="2 of 3" hidden>
-            <p class="eyebrow">Relationships, not transactions</p>
-            <h1>Service built on trust, <em>proven by results</em>.</h1>
-            <p class="hero__lede">We're not just selling plans — we're building lasting relationships. Backed by a national carrier network and agents who actually answer the phone, we make sure your coverage works when it matters most.</p>
-            <div class="hero__actions">
-              <a class="btn btn--primary btn--lg" href="contact.html">Get Quotes</a>
-              <a class="btn btn--outline btn--lg" href="#testimonials">Read client stories</a>
+            <div class="hero__controls">
+              <button class="hero__arrow" id="heroPrev" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg>
+              </button>
+              <button class="hero__arrow" id="heroNext" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+              <div class="hero__dots" id="heroDots" role="tablist" aria-label="Choose slide"></div>
             </div>
-          </article>
-
-          <article class="hero__slide" role="group" aria-roledescription="slide" aria-label="3 of 3" hidden>
-            <p class="eyebrow">Nationwide PPO access</p>
-            <h1>Better benefits are a <em>hiring advantage</em>.</h1>
-            <p class="hero__lede">The right plan does more than control cost. It helps you win the candidates you want, keep the people you have, and stop losing talent to bigger competitors with deeper benefits.</p>
-            <div class="hero__actions">
-              <a class="btn btn--primary btn--lg" href="contact.html">Get Quotes</a>
-              <a class="btn btn--outline btn--lg" href="#compare">Compare your options</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="hero__controls">
-          <button class="hero__arrow" id="heroPrev" aria-label="Previous slide">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg>
-          </button>
-          <div class="hero__dots" id="heroDots" role="tablist" aria-label="Choose slide"></div>
-          <button class="hero__arrow" id="heroNext" aria-label="Next slide">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </div>
-        </div>
-
-        <!-- Static panel — sits alongside the rotating slides -->
-        <aside class="hero__panel" aria-label="Coverage snapshot">
-          <div class="hero__panel-head">
-            <span class="pill">Sample group &middot; 12 employees</span>
-            <h2>What a redesign usually looks like</h2>
           </div>
 
-          <ul class="hero__panel-rows">
-            <li>
-              <span class="hero__panel-label">Monthly premium / employee</span>
-              <span class="hero__panel-vals"><s>$612</s><strong>$401</strong></span>
-            </li>
-            <li>
-              <span class="hero__panel-label">Individual deductible</span>
-              <span class="hero__panel-vals"><s>$7,500</s><strong>$0–1,000</strong></span>
-            </li>
-            <li>
-              <span class="hero__panel-label">Network</span>
-              <span class="hero__panel-vals"><s>Local HMO</s><strong>National PPO</strong></span>
-            </li>
-            <li>
-              <span class="hero__panel-label">Telehealth visits</span>
-              <span class="hero__panel-vals"><s>$49</s><strong>$0</strong></span>
-            </li>
-            <li>
-              <span class="hero__panel-label">Participation</span>
-              <span class="hero__panel-vals"><s>4 of 12</s><strong>11 of 12</strong></span>
-            </li>
-          </ul>
-
-          <div class="hero__panel-foot">
-            <span class="hero__panel-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>
-            </span>
-            <p>Illustrative example, not a quote. Your numbers depend on census, state, and carrier.</p>
-          </div>
-        </aside>
+          <!-- Static panel alongside the rotating slides -->
+          <aside class="hero__media" data-anim="right" aria-label="Coverage snapshot">
+            <div class="hero__panel">
+              <div class="hero__panel-head">
+                <span class="pill">Sample group &middot; 12 employees</span>
+                <h2>What a redesign usually looks like</h2>
+              </div>
+              <ul class="hero__panel-rows">
+                <li><span class="hero__panel-label">Monthly premium / employee</span><span class="hero__panel-vals"><s>$612</s><strong>$401</strong></span></li>
+                <li><span class="hero__panel-label">Individual deductible</span><span class="hero__panel-vals"><s>$7,500</s><strong>$0–1,000</strong></span></li>
+                <li><span class="hero__panel-label">Network</span><span class="hero__panel-vals"><s>Local HMO</s><strong>National PPO</strong></span></li>
+                <li><span class="hero__panel-label">Telehealth visits</span><span class="hero__panel-vals"><s>$49</s><strong>$0</strong></span></li>
+                <li><span class="hero__panel-label">Participation</span><span class="hero__panel-vals"><s>4 of 12</s><strong>11 of 12</strong></span></li>
+              </ul>
+              <div class="hero__panel-foot">
+                <span class="hero__panel-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <p>Illustrative example, not a quote. Your numbers depend on census, state, and carrier.</p>
+              </div>
+            </div>
+          </aside>
 
         </div>
-
-        <ul class="hero__trust">
-          <li><strong>Nationwide</strong><span>PPO network access</span></li>
-          <li><strong>20–40%</strong><span>Typical premium savings</span></li>
-          <li><strong>$0</strong><span>Deductible options</span></li>
-          <li><strong>365 days</strong><span>Of post-enrollment support</span></li>
-        </ul>
       </div>
     </section>
 
-    <!-- ============ CARRIER MARQUEE ============ -->
+    <!-- ============ CARRIER BAND ============ -->
     <section class="carriers" aria-label="Carrier partners">
       <div class="container">
         <p class="carriers__label">Plans sourced from the carriers your team already knows</p>
       </div>
-      <div class="marquee" id="marquee">
+      <div class="marquee">
         <div class="marquee__track">
           <span>Aetna</span><span>Ambetter</span><span>AmeriHealth</span><span>BlueCross BlueShield</span>
           <span>CareSource</span><span>Cigna Healthcare</span><span>Medica</span><span>Meridian</span>
@@ -205,47 +193,52 @@
 
     <!-- ============ ENROLLMENT BANNER ============ -->
     <section class="enroll" id="enroll">
-      <div class="container enroll__inner">
-        <div class="enroll__copy">
-          <p class="eyebrow eyebrow--light">Time sensitive</p>
-          <h2>Open Enrollment is active. Don't get left behind with no options.</h2>
-          <p>Miss the window and your team waits another year. A fifteen-minute call is usually all it takes to know where you stand.</p>
-        </div>
-        <div class="enroll__side">
-          <!-- data-deadline is an ISO date; edit it each enrollment season -->
-          <div class="countdown" id="countdown" data-deadline="2027-01-15T23:59:59" aria-live="polite">
-            <div class="countdown__unit"><span data-cd="days">--</span><small>Days</small></div>
-            <div class="countdown__unit"><span data-cd="hours">--</span><small>Hours</small></div>
-            <div class="countdown__unit"><span data-cd="minutes">--</span><small>Minutes</small></div>
-            <div class="countdown__unit"><span data-cd="seconds">--</span><small>Seconds</small></div>
+      <div class="container">
+        <div class="enroll__inner" data-anim="block">
+          <div class="enroll__copy">
+            <p class="eyebrow eyebrow--light">Time sensitive</p>
+            <h2>Open Enrollment is active. Don't get left behind with no options.</h2>
+            <p id="countdownNote">Miss the window and your team waits another year. A fifteen-minute call is usually all it takes to know where you stand.</p>
           </div>
-          <a class="btn btn--gold btn--lg btn--block" href="contact.html">Get Custom Options Now</a>
+          <div class="enroll__side">
+            <!-- data-deadline is an ISO date; edit it each enrollment season -->
+            <div class="countdown" id="countdown" data-deadline="2027-01-15T23:59:59" aria-live="polite">
+              <div class="countdown__unit"><span data-cd="days">--</span><small>Days</small></div>
+              <div class="countdown__unit"><span data-cd="hours">--</span><small>Hours</small></div>
+              <div class="countdown__unit"><span data-cd="minutes">--</span><small>Minutes</small></div>
+              <div class="countdown__unit"><span data-cd="seconds">--</span><small>Seconds</small></div>
+            </div>
+            <a class="btn btn--primary btn--block btn--lg" href="contact.html">Get Custom Options Now</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ INTRO / WHAT WE DO ============ -->
-    <section class="section intro" id="about">
+    <!-- ============ INTRO ============ -->
+    <section class="section" id="about">
       <div class="container grid grid--2 grid--gap-xl">
-        <div class="reveal">
-          <p class="eyebrow">What we do</p>
-          <h2 class="h2">You've built something great — <em>your benefits should match the same level of care.</em></h2>
-          <p class="lead">The Stewart Brokerage keeps finding better ways to serve growing teams with personalized group programs. We start with your roster, your budget, and your renewal date, then bring back real numbers from real carriers.</p>
-          <p>Whether you're a two-person practice or a hundred-person operation with contractors in five states, the consultation is the same: an honest read on what you qualify for, what it costs, and what it actually covers.</p>
-          <ul class="checklist">
+        <div>
+          <p class="eyebrow" data-anim="block">Welcome to better benefits</p>
+          <h2 class="h2" data-anim="word">Custom Plans for Growing Teams</h2>
+          <p class="lead" data-anim="block">You've built something great — your benefits should match the same level of care.</p>
+          <div data-anim="block">
+            <p>The Stewart Brokerage keeps finding better ways to serve growing teams with personalized group programs. We start with your roster, your budget, and your renewal date, then bring back real numbers from real carriers.</p>
+            <p>Whether you're a two-person practice or a hundred-person operation with contractors in five states, the consultation is the same: an honest read on what you qualify for, what it costs, and what it actually covers.</p>
+          </div>
+          <ul class="checklist" data-anim="seq">
             <li>Coverage eligibility varies — we tell you upfront, not after the paperwork</li>
             <li>No obligations, no pushy sales, no bait pricing</li>
             <li>One point of contact from quote through renewal</li>
           </ul>
-          <a class="btn btn--primary btn--lg" href="contact.html">Schedule your free consultation</a>
+          <a class="btn btn--primary btn--lg" href="contact.html" data-anim="block">Schedule Your FREE Consultation</a>
         </div>
 
-        <aside class="quotecard reveal" id="quick-quote">
-          <h3>Request a quote in 30 seconds</h3>
+        <aside class="quotecard" id="quick-quote" data-anim="right">
+          <h3>Message Us</h3>
           <p class="quotecard__sub">Tell us the basics and we'll come back with options — usually the same business day.</p>
           <form class="form" id="quickQuoteForm" novalidate>
             <div class="field">
-              <label for="qq-name">Full name</label>
+              <label for="qq-name">Your name</label>
               <input type="text" id="qq-name" name="name" autocomplete="name" required />
               <span class="field__error" data-error-for="qq-name"></span>
             </div>
@@ -256,7 +249,7 @@
             </div>
             <div class="field-row">
               <div class="field">
-                <label for="qq-email">Email</label>
+                <label for="qq-email">Your e-mail</label>
                 <input type="email" id="qq-email" name="email" autocomplete="email" required />
                 <span class="field__error" data-error-for="qq-email"></span>
               </div>
@@ -274,12 +267,14 @@
                 <span class="field__error" data-error-for="qq-size"></span>
               </div>
             </div>
-            <label class="checkbox">
-              <input type="checkbox" id="qq-consent" name="consent" required />
-              <span>I agree that my submitted data is being collected and stored.</span>
-            </label>
-            <span class="field__error" data-error-for="qq-consent"></span>
-            <button class="btn btn--gold btn--block btn--lg" type="submit">Send my request</button>
+            <div class="field">
+              <label class="checkbox">
+                <input type="checkbox" id="qq-consent" name="consent" required />
+                <span>I agree that my submitted data is being collected and stored.</span>
+              </label>
+              <span class="field__error" data-error-for="qq-consent"></span>
+            </div>
+            <button class="btn btn--blue btn--block btn--lg" type="submit">Send Message</button>
             <p class="form__note">We reply to every request personally. No auto-dialers, ever.</p>
             <p class="form__status" id="quickQuoteStatus" role="status" aria-live="polite"></p>
           </form>
@@ -290,96 +285,86 @@
     <!-- ============ INDUSTRIES ============ -->
     <section class="section section--tint" id="industries">
       <div class="container">
-        <header class="section__head reveal">
-          <p class="eyebrow">Industries we serve</p>
-          <h2 class="h2">Specialized support for the teams we know best</h2>
-          <p class="lead">We've placed coverage across trades, clinics, studios, and startups. That means we already know which carriers say yes to your kind of business.</p>
+        <header class="section__head">
+          <p class="eyebrow" data-anim="block">Who we help</p>
+          <h2 class="h2" data-anim="word">Industries We Serve</h2>
+          <p class="lead" data-anim="block">We've placed coverage across trades, clinics, studios, and startups. That means we already know which carriers say yes to your kind of business.</p>
         </header>
 
-        <ul class="cards cards--4">
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 1 5.4-5.4l-2.5 2.5"/></svg>
-            </span>
+        <ul class="cards cards--4" data-anim="seq">
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 1 5.4-5.4l-2.5 2.5"/></svg></span>
             <h3>HVAC, Electrical &amp; General Contractors</h3>
             <p>Crews that move between job sites need coverage that travels with them. Nationwide PPO, not a county-wide HMO.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about contractor coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 7v10M7 12h10M4 4h16v16H4z"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 7v10M7 12h10M4 4h16v16H4z"/></svg></span>
             <h3>Medical &amp; Dental Practices</h3>
             <p>You take care of patients all day. We handle the plan design, onboarding, and the questions your front desk shouldn't have to answer.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about practice coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 3v18M8 7h8M6 12h12M9 17h6"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18M8 7h8M6 12h12M9 17h6"/></svg></span>
             <h3>Med Spas, Aesthetic Clinics &amp; RN-Owned Teams</h3>
             <p>Mixed W-2 and 1099 rosters are our specialty. We build something that covers everyone without blowing up the budget.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about med spa coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M2 12h20M12 2c3 3.5 3 16.5 0 20M12 2c-3 3.5-3 16.5 0 20"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12h20M12 2c3 3.5 3 16.5 0 20M12 2c-3 3.5-3 16.5 0 20"/></svg></span>
             <h3>Aviation &amp; Aerospace Professionals</h3>
             <p>High-mobility careers, multi-state licensure, and carriers who understand the risk profile.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about aviation coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg></span>
             <h3>Real Estate Developers &amp; Custom Builders</h3>
             <p>Project-based headcount that swings with the calendar. We design plans that flex instead of penalizing you.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about developer coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/></svg></span>
             <h3>Consultants, Advisors &amp; Creative Freelancers</h3>
             <p>Solo or small-partnership coverage that doesn't feel like a downgrade from your last corporate job.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about consultant coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M9 3v4M15 3v4M7 7h10v6a5 5 0 0 1-10 0zM12 18v3"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3v4M15 3v4M7 7h10v6a5 5 0 0 1-10 0zM12 18v3"/></svg></span>
             <h3>Biotech Firms &amp; Life Sciences</h3>
             <p>Grant-funded and venture-funded orgs with unusual runway math. We plan around your funding cycle.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about biotech coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
-            <span class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="m8 16-4-4 4-4M16 8l4 4-4 4M14 4l-4 16"/></svg>
-            </span>
+          <li class="card">
+            <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 16-4-4 4-4M16 8l4 4-4 4M14 4l-4 16"/></svg></span>
             <h3>Tech Start-Ups &amp; Software Teams</h3>
             <p>Remote-first companies with employees in a dozen states. One plan, one network, one renewal date.</p>
+            <a class="arrow-link" href="contact.html" aria-label="Contact us about startup coverage"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
         </ul>
 
-        <div class="callout reveal">
+        <div class="callout" data-anim="block">
           <div>
             <h3>Not sure where you fit in?</h3>
-            <p>Solo pro or team leader — we'll tailor the right solution either way.</p>
+            <p>Solo pro or team leader — we'll tailor the perfect solution.</p>
           </div>
-          <a class="btn btn--primary btn--lg" href="contact.html">Get on a call</a>
+          <a class="btn btn--lg" href="contact.html">Get On A Call</a>
         </div>
       </div>
     </section>
 
     <!-- ============ COMPARISON ============ -->
-    <section class="section compare" id="compare">
+    <section class="section" id="compare">
       <div class="container">
-        <header class="section__head reveal">
-          <p class="eyebrow">Your needs come first</p>
-          <h2 class="h2">We don't just match plans — <em>we manage them long term</em></h2>
-          <p class="lead">Here's an honest side-by-side of the three paths most business owners are choosing between.</p>
+        <header class="section__head section__head--center">
+          <p class="eyebrow eyebrow--center" data-anim="block">We really find group solutions that make sense</p>
+          <h2 class="h2" data-anim="word">How we truly make a difference:</h2>
         </header>
 
-        <div class="table-wrap reveal">
+        <div class="table-wrap" data-anim="block">
           <table class="compare-table">
             <caption class="sr-only">Comparison of ACA plans, limited benefit programs, and Stewart Brokerage solutions</caption>
             <thead>
               <tr>
-                <th scope="col">Feature</th>
                 <th scope="col">ACA Plans</th>
                 <th scope="col">Limited Benefit Programs</th>
                 <th scope="col" class="is-featured">The Stewart Brokerage</th>
@@ -387,41 +372,36 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Cost</th>
-                <td>High monthly premiums</td>
-                <td>Low premiums, limited coverage</td>
-                <td class="is-featured">Competitive premiums, often <strong>20–40% lower</strong></td>
+                <td class="neg"><span class="mark" aria-hidden="true">🚫</span>High monthly costs</td>
+                <td class="warn"><span class="mark" aria-hidden="true">⚠️</span>Low premiums but very limited coverage</td>
+                <td class="is-featured"><span class="mark" aria-hidden="true">✅</span>Competitive premiums, often 20–40% lower</td>
               </tr>
               <tr>
-                <th scope="row">Deductibles</th>
-                <td>Large deductibles</td>
-                <td>Often none — but major gaps</td>
-                <td class="is-featured"><strong>$0 or low deductible</strong> options</td>
+                <td class="neg"><span class="mark" aria-hidden="true">🚫</span>Big deductibles</td>
+                <td class="warn"><span class="mark" aria-hidden="true">⚠️</span>Often no deductible, but major gaps in protection</td>
+                <td class="is-featured"><span class="mark" aria-hidden="true">✅</span>Often $0 or low deductible options</td>
               </tr>
               <tr>
-                <th scope="row">Network</th>
-                <td>HMO limits</td>
-                <td>No true PPO, restricted lists</td>
-                <td class="is-featured"><strong>Nationwide PPO access</strong></td>
+                <td class="neg"><span class="mark" aria-hidden="true">🚫</span>HMO limits</td>
+                <td class="warn"><span class="mark" aria-hidden="true">⚠️</span>No true PPO access; restricted provider lists</td>
+                <td class="is-featured"><span class="mark" aria-hidden="true">✅</span>Nationwide PPO access</td>
               </tr>
               <tr>
-                <th scope="row">Customization</th>
-                <td>One-size-fits-all</td>
-                <td>Pre-packaged, minimal options</td>
-                <td class="is-featured">Personalized to your team and workflow</td>
+                <td class="neg"><span class="mark" aria-hidden="true">🚫</span>One-size-fits-all</td>
+                <td class="warn"><span class="mark" aria-hidden="true">⚠️</span>Pre-packaged plans with little to no customization</td>
+                <td class="is-featured"><span class="mark" aria-hidden="true">✅</span>Personalized to your team and workflow</td>
               </tr>
               <tr>
-                <th scope="row">Service</th>
-                <td>Confusing support lines</td>
-                <td>Little transparency, no post-enrollment help</td>
-                <td class="is-featured">Dedicated enrollment &amp; service reps</td>
+                <td class="neg"><span class="mark" aria-hidden="true">🚫</span>Confusing service</td>
+                <td class="warn"><span class="mark" aria-hidden="true">⚠️</span>Little transparency, no real support after enrollment</td>
+                <td class="is-featured"><span class="mark" aria-hidden="true">✅</span>Dedicated enrollment &amp; service reps</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div class="compare__cta reveal">
-          <a class="btn btn--primary btn--lg" href="contact.html">See what your team can qualify for</a>
+        <div class="compare__cta" data-anim="block">
+          <a class="btn btn--primary btn--lg" href="contact.html">See What Your Team Can Qualify For</a>
         </div>
       </div>
     </section>
@@ -429,36 +409,40 @@
     <!-- ============ SERVICES ============ -->
     <section class="section section--dark" id="services">
       <div class="container">
-        <header class="section__head section__head--light reveal">
-          <p class="eyebrow eyebrow--light">Our services</p>
-          <h2 class="h2">How we help businesses &amp; small groups</h2>
+        <header class="section__head section__head--center">
+          <p class="eyebrow eyebrow--light eyebrow--center" data-anim="block">How we help businesses &amp; small groups</p>
+          <h2 class="h2" data-anim="word">Our Services</h2>
         </header>
 
-        <ul class="cards cards--4 cards--dark">
-          <li class="card reveal">
+        <ul class="cards cards--4 cards--dark" data-anim="seq">
+          <li class="card card--center">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20ZM3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"/></svg></span>
             <h3>Nationwide Plans</h3>
             <p>Nationwide PPO group plans that support remote teams, contractors, and small businesses with flexible, high-quality coverage across the U.S.</p>
+            <a class="arrow-link" href="services.html#nationwide" aria-label="More about nationwide plans"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
+          <li class="card card--center">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></span>
             <h3>Tailored Group Plan Design</h3>
             <p>Custom benefits built around your business — not a template. Smarter plans for teams of any size or structure.</p>
+            <a class="arrow-link" href="services.html#design" aria-label="More about plan design"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
+          <li class="card card--center">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 2h10v20H7zM11 18h2"/></svg></span>
-            <h3>Telehealth &amp; Modern Wellness</h3>
-            <p>Give your team easy access to telehealth, mental wellness, and virtual care — included with many of our options.</p>
+            <h3>Telehealth &amp; Modern Wellness Access</h3>
+            <p>Give your team easy access to telehealth, mental wellness, and virtual care — all included with many of our options.</p>
+            <a class="arrow-link" href="services.html#telehealth" aria-label="More about telehealth"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
-          <li class="card reveal">
+          <li class="card card--center">
             <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6l-8-3Z"/></svg></span>
             <h3>Supplemental &amp; Voluntary Benefits</h3>
-            <p>Round out your benefits with optional dental, vision, life, accident, and disability coverage — all managed in one place.</p>
+            <p>Round out your benefits with optional coverage for dental, vision, life, accident, and more — all managed in one place.</p>
+            <a class="arrow-link" href="services.html#supplemental" aria-label="More about supplemental benefits"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </li>
         </ul>
 
-        <div class="section__foot reveal">
-          <a class="btn btn--gold btn--lg" href="services.html">Explore all services</a>
+        <div class="section__foot" data-anim="block">
+          <a class="btn btn--teal btn--lg" href="services.html">Explore All Services</a>
         </div>
       </div>
     </section>
@@ -466,41 +450,41 @@
     <!-- ============ PROCESS ============ -->
     <section class="section" id="process">
       <div class="container">
-        <header class="section__head reveal">
-          <p class="eyebrow">Group health coverage made simple</p>
-          <h2 class="h2">Tailored solutions for small businesses</h2>
-          <p class="lead">Four steps, no runaround. Most groups go from first call to enrolled in under three weeks.</p>
+        <header class="section__head">
+          <p class="eyebrow" data-anim="block">Group health coverage made simple</p>
+          <h2 class="h2" data-anim="word">Tailored Solutions for Small Businesses</h2>
+          <p class="lead" data-anim="block">Four steps, no runaround. Most groups go from first call to enrolled in under three weeks.</p>
         </header>
 
         <ol class="steps">
-          <li class="step reveal">
+          <li class="step">
             <span class="step__num">01</span>
             <h3>Discovery call</h3>
             <p>Fifteen minutes. We learn your headcount, your W-2 and 1099 mix, your renewal date, and what's actually bothering you about the current plan.</p>
           </li>
-          <li class="step reveal">
+          <li class="step">
             <span class="step__num">02</span>
             <h3>Plan design &amp; quoting</h3>
             <p>We shop the national carrier network and bring back two or three real options with real numbers — side by side, plain English.</p>
           </li>
-          <li class="step reveal">
+          <li class="step">
             <span class="step__num">03</span>
             <h3>Enrollment &amp; onboarding</h3>
             <p>We run the employee education sessions, handle the paperwork, and manage the transition from your old policy or ACA plan.</p>
           </li>
-          <li class="step reveal">
+          <li class="step">
             <span class="step__num">04</span>
             <h3>Concierge servicing</h3>
             <p>Claims questions, ID cards, new hires, terminations, renewal strategy. One number to call for the life of the policy.</p>
           </li>
         </ol>
 
-        <div class="callout callout--soft reveal">
+        <div class="callout callout--soft" data-anim="block">
           <div>
             <h3>Flexible benefits for teams with or without W-2 employees</h3>
             <p>Seamless transitions from old policies, support with renewal dates and employee education, and concierge-style servicing throughout the policy.</p>
           </div>
-          <a class="btn btn--primary btn--lg" href="contact.html">Get the full scope of your options</a>
+          <a class="btn btn--lg" href="contact.html">Get The Full Scope Of Your Options</a>
         </div>
       </div>
     </section>
@@ -521,40 +505,31 @@
     <!-- ============ TESTIMONIALS ============ -->
     <section class="section section--tint" id="testimonials">
       <div class="container">
-        <header class="section__head reveal">
-          <p class="eyebrow">What our clients say</p>
-          <h2 class="h2">Results that show up in hiring, retention, and the P&amp;L</h2>
+        <header class="section__head section__head--center">
+          <p class="eyebrow eyebrow--center" data-anim="block">What our clients say</p>
+          <h2 class="h2" data-anim="word">Results that show up in hiring and retention</h2>
         </header>
 
-        <ul class="cards cards--3">
-          <li class="quote reveal">
+        <ul class="cards cards--3" data-anim="seq">
+          <li class="quote">
             <svg class="quote__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7c-2.8 0-5 2.2-5 5s2.2 5 5 5c0-3 0-6-5-6M20 7c-2.8 0-5 2.2-5 5s2.2 5 5 5c0-3 0-6-5-6"/></svg>
             <blockquote>For the first time, our benefits package is actually helping us hire — not hurting us. We've filled roles faster, and our guys are happier and healthier. Stewart delivered way more than just savings.</blockquote>
-            <footer>
-              <strong>Jeffery K.</strong>
-              <span>Owner &middot; Construction Company</span>
-            </footer>
+            <footer><strong>Jeffery K.</strong><span>Owner &middot; Construction Company</span></footer>
           </li>
-          <li class="quote reveal">
+          <li class="quote">
             <svg class="quote__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7c-2.8 0-5 2.2-5 5s2.2 5 5 5c0-3 0-6-5-6M20 7c-2.8 0-5 2.2-5 5s2.2 5 5 5c0-3 0-6-5-6"/></svg>
             <blockquote>We went from two people on our old plan to almost the whole office being covered — and we're saving money. The process was simple, the support was great, and our team feels taken care of.</blockquote>
-            <footer>
-              <strong>Geraldi C.</strong>
-              <span>Office Manager &middot; Medical Practice</span>
-            </footer>
+            <footer><strong>Geraldi C.</strong><span>Office Manager &middot; Medical Practice</span></footer>
           </li>
-          <li class="quote reveal">
+          <li class="quote">
             <svg class="quote__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7c-2.8 0-5 2.2-5 5s2.2 5 5 5c0-3 0-6-5-6M20 7c-2.8 0-5 2.2-5 5s2.2 5 5 5c0-3 0-6-5-6"/></svg>
             <blockquote>We were on the verge of losing our best staff to competitors with better plans. Stewart helped us cut costs nearly in half and offer real benefits the team could get behind. A total game changer for morale.</blockquote>
-            <footer>
-              <strong>Dr. Henry S.</strong>
-              <span>Practice Manager &middot; Dental Office</span>
-            </footer>
+            <footer><strong>Dr. Henry S.</strong><span>Practice Manager &middot; Dental Office</span></footer>
           </li>
         </ul>
 
-        <div class="section__foot reveal">
-          <a class="btn btn--primary btn--lg" href="contact.html">Claim your complimentary coverage audit</a>
+        <div class="section__foot" data-anim="block">
+          <a class="btn btn--primary btn--lg" href="contact.html">Claim Complimentary Coverage Audit</a>
         </div>
       </div>
     </section>
@@ -562,12 +537,12 @@
     <!-- ============ FAQ ============ -->
     <section class="section" id="faq">
       <div class="container container--narrow">
-        <header class="section__head reveal">
-          <p class="eyebrow">Questions, answered</p>
-          <h2 class="h2">Before you book a call</h2>
+        <header class="section__head section__head--center">
+          <p class="eyebrow eyebrow--center" data-anim="block">Questions, answered</p>
+          <h2 class="h2" data-anim="word">Before you book a call</h2>
         </header>
 
-        <div class="accordion" id="accordion">
+        <div class="accordion" id="accordion" data-anim="block">
           <div class="acc">
             <h3><button class="acc__btn" aria-expanded="false">What's the minimum group size?<span class="acc__icon" aria-hidden="true"></span></button></h3>
             <div class="acc__panel"><p>Often as few as one or two participating members, depending on the carrier and your state. Solo professionals and husband-and-wife businesses frequently qualify for group-style programs that aren't available on the open marketplace.</p></div>
@@ -598,13 +573,13 @@
 
     <!-- ============ CTA BAND ============ -->
     <section class="cta-band">
-      <div class="container cta-band__inner">
+      <div class="container cta-band__inner" data-anim="block">
         <div>
           <h2>Let's find out what your team actually qualifies for.</h2>
           <p>No obligation. No pushy sales. Just a straight answer and real numbers.</p>
         </div>
         <div class="cta-band__actions">
-          <a class="btn btn--gold btn--lg" href="contact.html">Get quotes</a>
+          <a class="btn btn--teal btn--lg" href="contact.html">Get Quotes</a>
           <a class="btn btn--outline-light btn--lg" href="tel:+15550000000">Call +1 (555) 000-0000</a>
         </div>
       </div>
@@ -622,11 +597,11 @@
           </span>
           <span class="brand__text"><strong>The Stewart Brokerage</strong></span>
         </a>
-        <p class="footer__tag">The straightforward way to find group coverage.</p>
+        <p class="footer__tag">The easiest way to find group coverage.</p>
         <form class="newsletter" id="newsletterForm" novalidate>
           <label for="nl-email" class="sr-only">Email address</label>
           <input type="email" id="nl-email" name="email" placeholder="you@company.com" required />
-          <button class="btn btn--gold" type="submit">Subscribe</button>
+          <button class="btn btn--teal" type="submit">Subscribe</button>
         </form>
         <p class="form__status" id="newsletterStatus" role="status" aria-live="polite"></p>
       </div>
@@ -658,7 +633,7 @@
             <!-- TODO: replace placeholder contact details -->
             <li><a href="mailto:quotes@thestewartbrokerage.com">quotes@thestewartbrokerage.com</a></li>
             <li><a href="tel:+15550000000">+1 (555) 000-0000</a></li>
-            <li>Mon–Fri 8:00–18:00</li>
+            <li>Mon – Fri 8:00 – 18:00</li>
             <li>Sunrise, Florida</li>
           </ul>
           <ul class="footer__social">
@@ -676,7 +651,7 @@
   </footer>
 
   <button class="to-top" id="toTop" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
   </button>
 
   <script src="js/main.js" defer></script>
