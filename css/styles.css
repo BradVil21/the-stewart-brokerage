@@ -415,6 +415,28 @@ button { font: inherit; cursor: pointer; }
   font-size: var(--fs-xs); color: var(--ink-400); line-height: 1.5;
 }
 
+/* wide 3:2 photo slot */
+.photo--wide { aspect-ratio: 3 / 2; }
+
+/* 'How it works': heading and supporting photo side by side above the steps */
+.process__top { display: grid; gap: var(--sp-5); align-items: center; margin-bottom: var(--sp-6); }
+@media (min-width: 900px) {
+  .process__top { grid-template-columns: 1fr 0.85fr; gap: var(--sp-6); }
+  .process__top .section__head { margin-bottom: 0; }
+}
+
+/* client portrait sits beside the reviews heading (grid, never a float —
+   a float here escapes the container and lands on top of the carousel) */
+.reviews__intro { display: grid; gap: var(--sp-5); justify-items: center; margin-bottom: var(--sp-5); }
+.reviews__portrait { width: 100%; max-width: 280px; }
+.reviews__ratingRow { text-align: center; }
+@media (min-width: 900px) {
+  .reviews__intro { grid-template-columns: 260px 1fr; gap: var(--sp-6); align-items: center; justify-items: start; }
+  .reviews__intro .reviews__head { text-align: left; margin: 0 0 var(--sp-4); }
+  .reviews__intro .reviews__head .eyebrow { justify-content: flex-start; }
+  .reviews__ratingRow { text-align: left; }
+}
+
 /* hero media: stat card overlaps the photo's lower-left corner.
    Declared after .hero__card so the absolute positioning wins. */
 .hero__media { position: relative; margin-top: var(--sp-3); }
