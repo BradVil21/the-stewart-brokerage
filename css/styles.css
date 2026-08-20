@@ -1170,3 +1170,8 @@ img.review__avatar { border-radius: 50%; object-fit: cover; }
   background: var(--sky-100); color: var(--blue-600);
   font-size: var(--fs-sm); font-weight: 700;
 }
+
+/* Home-page article cards: title leads, blurb, then the category tag last —
+   matching how the rest of the site orders a card. */
+.post-card__body h3 + p { color: var(--ink-600); }
+.post-card__body .post-card__meta { margin-top: auto; padding-top: 0.35rem; }
