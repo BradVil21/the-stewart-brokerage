@@ -29,42 +29,51 @@
 :root {
   /* ------------------------------------------------------------------
      Brand palette — UnitedHealthcare-inspired.
-     UHC Blue #002677 carries the weight; Bright Blue #196ECF is the
+     UHC Blue #161616 carries the weight; Bright Blue #196ECF is the
      action colour; Orange #FF612B is the single accent used sparingly.
      Changing these four lines re-skins the entire site.
      ------------------------------------------------------------------ */
-  --navy-900: #001b54;   /* deepest — footer, dark bands            */
-  --navy-800: #002677;   /* UHC Blue — headings, primary surfaces   */
-  --navy-700: #003da5;
-  --navy-600: #0c55b8;
+  /* ------------------------------------------------------------------
+     Brand palette — taken from the Stewart Brokerage logo.
+     Black #161616 is the wordmark; gold #A08A63 is the script monogram.
+     Interactive gold is darkened to #7D6842 so link and button text clears
+     WCAG AA contrast on white. Changing these lines re-skins the site.
+     ------------------------------------------------------------------ */
+  --navy-900: #0e0e0e;   /* deepest — footer, dark bands        */
+  --navy-800: #161616;   /* logo black — headings, primary       */
+  --navy-700: #2b2620;
+  --navy-600: #3e372c;
 
-  --blue-700: #12559e;
-  --blue-600: #1565c7;
-  --blue-500: #196ecf;   /* UHC Bright Blue — buttons, links        */
-  --blue-400: #4a90e2;
-  --blue-200: #b3d4f5;
-  --sky-100:  #e3f1fc;
-  --sky-50:   #f2f8fe;
+  --blue-700: #5a4a2d;
+  --blue-600: #6b5836;
+  --blue-500: #7d6842;   /* interactive gold — links, accents    */
+  --blue-400: #a08a63;   /* logo gold — decorative, borders      */
+  --blue-200: #dfd3b9;
+  --sky-100:  #f3ede1;
+  --sky-50:   #faf7f1;
 
-  --orange-600: #e04a12;
-  --orange-500: #ff612b; /* UHC Orange — accent, use sparingly      */
-  --orange-50:  #fff1ec;
+  --gold:      #a08a63;  /* the logo gold, unmodified            */
+  --gold-soft: #c8b78f;
 
-  --amber-500: #f5b700;  /* UHC Gold — star ratings                 */
-  --green-600: #007000;  /* UHC Green — savings, confirmations      */
-  --green-50:  #e8f5e8;
-  --red-600:   #c8102e;
-  --red-50:    #fdf0f2;
+  --orange-600: #8a6a2c;
+  --orange-500: #a08a63;
+  --orange-50:  #f7f2e8;
+
+  --amber-500: #a08a63;  /* star ratings, in brand gold          */
+  --green-600: #4a6b3a;  /* savings / confirmations, muted olive */
+  --green-50:  #f0f4ec;
+  --red-600:   #9b2c2c;
+  --red-50:    #fdf3f3;
 
   /* Neutrals */
-  --ink-900: #0f172a;
-  --ink-700: #334155;
-  --ink-600: #475569;
-  --ink-400: #94a3b8;
-  --ink-300: #cbd5e1;
-  --line:    #e2e8f0;
+  --ink-900: #161616;
+  --ink-700: #3b3630;
+  --ink-600: #57514a;
+  --ink-400: #9a938a;
+  --ink-300: #cfc8bd;
+  --line:    #e7e0d3;
   --paper:   #ffffff;
-  --canvas:  #f8fafc;
+  --canvas:  #faf8f4;
 
   /* Type */
   --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -99,7 +108,7 @@
   --shadow-sm: 0 2px 8px rgba(11, 37, 69, 0.06), 0 1px 2px rgba(11, 37, 69, 0.04);
   --shadow-md: 0 10px 28px rgba(11, 37, 69, 0.09), 0 2px 6px rgba(11, 37, 69, 0.05);
   --shadow-lg: 0 26px 60px rgba(11, 37, 69, 0.14), 0 8px 20px rgba(11, 37, 69, 0.07);
-  --shadow-blue: 0 10px 26px rgba(46, 125, 246, 0.30);
+  --shadow-blue: 0 10px 24px rgba(160, 138, 99, 0.30);
 
   --container: 1200px;
   --dur: 0.7s;
@@ -217,8 +226,12 @@ button { font: inherit; cursor: pointer; }
 .btn--sm { padding: 0.6rem 1.15rem; font-size: var(--fs-xs); }
 .btn--block { width: 100%; }
 
-.btn--primary { --btn-bg: var(--blue-500); --btn-bd: var(--blue-500); }
-.btn--primary:hover { --btn-bg: var(--blue-600); --btn-bd: var(--blue-600); box-shadow: var(--shadow-blue); }
+/* black fill, gold on hover — the two colours the logo already uses */
+.btn--primary { --btn-bg: var(--navy-800); --btn-bd: var(--navy-800); }
+.btn--primary:hover { --btn-bg: var(--blue-500); --btn-bd: var(--blue-500); box-shadow: var(--shadow-blue); }
+
+.btn--gold { --btn-bg: var(--blue-500); --btn-bd: var(--blue-500); }
+.btn--gold:hover { --btn-bg: var(--blue-600); --btn-bd: var(--blue-600); box-shadow: var(--shadow-blue); }
 
 .btn--navy { --btn-bg: var(--navy-800); --btn-bd: var(--navy-800); }
 .btn--navy:hover { --btn-bg: var(--navy-700); --btn-bd: var(--navy-700); box-shadow: var(--shadow-md); }
@@ -317,7 +330,7 @@ button { font: inherit; cursor: pointer; }
 }
 .hero::before {
   content: ""; position: absolute; top: -220px; right: -160px; width: 720px; height: 720px; z-index: -1;
-  background: radial-gradient(circle, rgba(25, 110, 207, 0.16), transparent 66%);
+  background: radial-gradient(circle, rgba(160, 138, 99, 0.16), transparent 66%);
   pointer-events: none;
 }
 @media (max-width: 760px) {
@@ -365,9 +378,9 @@ button { font: inherit; cursor: pointer; }
 .photo.is-empty img { display: none; }
 .photo.is-empty {
   background:
-    repeating-linear-gradient(135deg, rgba(46,125,246,.05) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(135deg, rgba(160, 138, 99, .05) 0 12px, transparent 12px 24px),
     linear-gradient(160deg, var(--sky-50), #eef4ff);
-  border: 1.5px dashed rgba(46, 125, 246, 0.35);
+  border: 1.5px dashed rgba(160, 138, 99, 0.35);
   box-shadow: none;
 }
 .photo.is-empty::after {
@@ -463,61 +476,66 @@ button { font: inherit; cursor: pointer; }
   .hero__media .hero__card-foot { margin-top: 0.7rem; padding-top: 0.6rem; }
 }
 
-/* ---------- 07. Carrier logo carousel ---------- */
-.carriers { background: #fff; padding: var(--sp-6) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.carriers__label {
-  text-align: center; font-size: clamp(1.25rem, 2.4vw, 1.7rem); font-weight: 700;
-  color: var(--navy-800); margin: 0 0 var(--sp-4); letter-spacing: -0.02em;
+/* ---------- 07. Carrier logo strip ---------- */
+/* Clean white band, hairline rules top and bottom, one small uppercase label,
+   then the marks themselves in full colour with nothing framing them. Carrier
+   logos are trademarks — they read as legitimate only when shown unmodified,
+   so no cards, no grayscale filter, no recolouring. */
+.carriers {
+  background: #fff;
+  padding: clamp(2.2rem, 4vw, 3.2rem) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
-.carriers__label em { font-style: normal; color: var(--blue-500); }
+.carriers__label {
+  text-align: center;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin: 0 0 clamp(1.5rem, 3vw, 2.4rem);
+}
 .logo-marquee {
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
 .logo-marquee__track {
-  display: flex; align-items: center; gap: clamp(2.5rem, 5vw, 4.5rem);
-  width: max-content; animation: logo-scroll 45s linear infinite;
+  display: flex; align-items: center;
+  gap: clamp(2.75rem, 6vw, 5.5rem);
+  width: max-content;
+  animation: logo-scroll 48s linear infinite;
 }
 .logo-marquee:hover .logo-marquee__track { animation-play-state: paused; }
-/* Each logo sits in its own white card — transparent PNG/SVG, full colour.
-   Carrier marks are trademarks; they read as "official" only when shown clean,
-   so no grayscale filter and no recolouring here. */
-.logo-card {
+
+/* A fixed-height slot per mark so wide wordmarks (Humana) and stacked lockups
+   (BlueCross BlueShield) optically match instead of one dwarfing the other. */
+.logo-slot {
   flex: none;
   display: flex; align-items: center; justify-content: center;
-  width: clamp(158px, 18vw, 210px); height: clamp(88px, 9.5vw, 108px);
-  padding: 0.7rem 1.15rem;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-xs);
-  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  height: clamp(30px, 3.4vw, 42px);
+  width: clamp(112px, 12vw, 158px);
 }
-.logo-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--blue-200);
-}
-.logo-card { overflow: hidden; }
-/* object-fit letterboxes every mark inside the card, so wide wordmarks and
-   stacked lockups (BlueCross BlueShield) both sit correctly without clipping. */
 .logo-marquee img {
   max-width: 100%; max-height: 100%; width: auto; height: auto;
-  min-width: 0; min-height: 0;          /* required or flex items refuse to shrink */
+  min-width: 0; min-height: 0;      /* flex items refuse to shrink without this */
   object-fit: contain;
+  opacity: 0.88;
+  transition: opacity var(--dur-fast) var(--ease);
 }
+.logo-marquee img:hover { opacity: 1; }
 
 @keyframes logo-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
-  /* no scroll, so lay the logos out as a static grid — and drop the duplicated
-     half of the loop, which only exists to make the marquee seamless */
-  .logo-marquee__track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; row-gap: 1rem; }
-  .logo-card[aria-hidden="true"] { display: none; }
+  /* static grid instead of a scroll, and drop the duplicated half of the loop
+     that only exists to make the marquee seamless */
+  .logo-marquee__track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; row-gap: 1.6rem; }
+  .logo-slot[aria-hidden="true"] { display: none; }
 }
 .carriers__note {
   text-align: center; font-size: var(--fs-xs); color: var(--ink-400);
-  max-width: 60ch; margin: var(--sp-4) auto 0; line-height: 1.55;
+  max-width: 60ch; margin: clamp(1.5rem, 3vw, 2.2rem) auto 0; line-height: 1.55;
 }
 
 /* ---------- 08. Sections & cards ---------- */
@@ -610,7 +628,7 @@ button { font: inherit; cursor: pointer; }
   background-repeat: no-repeat; background-position: right 0.8rem center; background-size: 1.1rem; padding-right: 2.4rem;
 }
 .field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(46, 125, 246, 0.16);
+  outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(160, 138, 99, 0.16);
 }
 .field input::placeholder, .field textarea::placeholder { color: var(--ink-400); }
 .field.is-invalid input, .field.is-invalid select, .field.is-invalid textarea { border-color: var(--red-600); }
@@ -830,7 +848,7 @@ button { font: inherit; cursor: pointer; }
 }
 .opt:hover .opt__box { border-color: var(--blue-200); transform: translateY(-2px); }
 .opt input:focus-visible + .opt__box { outline: 3px solid var(--blue-400); outline-offset: 2px; }
-.opt input:checked + .opt__box { border-color: var(--blue-500); background: var(--sky-50); box-shadow: 0 0 0 4px rgba(46,125,246,0.12); }
+.opt input:checked + .opt__box { border-color: var(--blue-500); background: var(--sky-50); box-shadow: 0 0 0 4px rgba(160, 138, 99, 0.12); }
 .opt__ico { width: 38px; height: 38px; border-radius: var(--r-sm); background: var(--sky-100); display: grid; place-items: center; flex: none; }
 .opt__ico svg { width: 20px; height: 20px; fill: none; stroke: var(--blue-600); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .opt input:checked + .opt__box .opt__ico { background: var(--blue-500); }
@@ -883,12 +901,12 @@ button { font: inherit; cursor: pointer; }
 .post-card h3 a:hover { color: var(--blue-600); }
 .post-card p { font-size: var(--fs-sm); margin: 0; flex: 1; }
 
-.thumb--fl { background: linear-gradient(135deg, #002677, #1565c7); }
-.thumb--tx { background: linear-gradient(135deg, #003da5, #196ecf); }
-.thumb--nv { background: linear-gradient(135deg, #001b54, #0c55b8); }
-.thumb--gen { background: linear-gradient(135deg, #12559e, #4a90e2); }
-.thumb--cost { background: linear-gradient(135deg, #002677, #007000); }
-.thumb--comp { background: linear-gradient(135deg, #003da5, #ff612b); }
+.thumb--fl { background: linear-gradient(135deg, #161616, #7d6842); }
+.thumb--tx { background: linear-gradient(135deg, #2b2620, #a08a63); }
+.thumb--nv { background: linear-gradient(135deg, #001b54, #6b5836); }
+.thumb--gen { background: linear-gradient(135deg, #5a4a2d, #a08a63); }
+.thumb--cost { background: linear-gradient(135deg, #161616, #4a6b3a); }
+.thumb--comp { background: linear-gradient(135deg, #2b2620, #ff612b); }
 
 /* article body */
 .article { padding: var(--sp-5) 0 var(--sp-6); }
