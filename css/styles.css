@@ -1284,3 +1284,73 @@ img.review__avatar { border-radius: 50%; object-fit: cover; }
 /* Sticky header offset for in-page anchors, tuned per breakpoint so a jump
    target never lands underneath the bar. */
 @media (max-width: 700px) { html { scroll-padding-top: 78px; } }
+
+/* ---------- 26. Announcement bar ---------- */
+.announce {
+  background: linear-gradient(100deg, var(--navy-900), var(--navy-700));
+  color: #fff;
+  position: relative; z-index: 101;   /* above the sticky header's shadow */
+}
+.announce__inner {
+  display: flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  min-height: 46px; padding: 0.45rem 0;
+}
+.announce__text { margin: 0; font-size: var(--fs-sm); line-height: 1.45; text-align: center; }
+.announce__text strong { color: var(--orange-500); font-weight: 700; }
+.announce__link {
+  color: #fff; font-weight: 700; text-decoration: underline;
+  text-underline-offset: 3px; white-space: nowrap;
+}
+.announce__link:hover { color: var(--blue-200); }
+.announce__close {
+  flex: none; width: 40px; height: 40px; display: grid; place-items: center;
+  background: none; border: 0; color: rgba(255,255,255,0.7); cursor: pointer;
+  border-radius: var(--r-sm);
+}
+.announce__close:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.announce__close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+@media (max-width: 700px) {
+  .announce__text { font-size: var(--fs-xs); }
+  .announce__close { width: 44px; height: 44px; }
+}
+
+/* ---------- 27. About page ---------- */
+.about-grid { display: grid; gap: var(--sp-5); align-items: start; }
+@media (min-width: 900px) { .about-grid { grid-template-columns: 0.72fr 1.28fr; gap: var(--sp-6); } }
+.about-photo { position: sticky; top: 110px; }
+@media (max-width: 899px) { .about-photo { position: static; max-width: 420px; } }
+.about-quote {
+  margin: var(--sp-4) 0; padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-5);
+  border-left: 4px solid var(--blue-500);
+  background: var(--sky-50); border-radius: 0 var(--r-lg) var(--r-lg) 0;
+}
+.about-quote p { font-size: var(--fs-lg); color: var(--navy-800); font-weight: 500; margin: 0 0 0.6rem; }
+.about-quote footer { font-size: var(--fs-sm); color: var(--ink-600); font-weight: 600; }
+.about-ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: var(--sp-4); }
+
+/* ---------- 28. Google-style review chrome ----------
+   The same card whether it holds a live Google review or a proof card, so the
+   swap-in is seamless. Star gold matches Google's rating yellow. */
+.review { border-radius: 14px; box-shadow: 0 1px 3px rgba(2, 24, 66, 0.08), 0 4px 14px rgba(2, 24, 66, 0.06); }
+.review .stars svg { fill: #FBBC04; stroke: none; width: 16px; height: 16px; }
+.review blockquote { font-size: var(--fs-sm); line-height: 1.6; color: var(--ink-700); }
+.review__who strong { font-size: var(--fs-sm); color: var(--ink-900); }
+.review__who span { font-size: var(--fs-xs); color: var(--ink-400); }
+.review__src {
+  margin-top: auto; padding-top: 0.6rem; border-top: 1px solid var(--line);
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: var(--fs-xs); color: var(--ink-400); font-weight: 600;
+}
+.review__src .g-logo { width: 15px; height: 15px; flex: none; }
+
+/* Rating badge — the classic widget: white pill, G logo, score, gold stars */
+.reviews__rating {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r-pill);
+  padding: 0.55rem 1.1rem; box-shadow: var(--shadow-sm);
+  font-weight: 700; color: var(--ink-900);
+}
+.reviews__rating .g-logo { width: 20px; height: 20px; flex: none; }
+.reviews__rating .stars { display: inline-flex; gap: 1px; }
+.reviews__rating .stars svg { fill: #FBBC04; stroke: none; width: 15px; height: 15px; }
+.reviews__rating [data-gr="count"] { font-weight: 500; color: var(--ink-400); font-size: var(--fs-xs); }

@@ -599,7 +599,7 @@
       '<span class="review__who"><strong></strong><span></span></span>' +
       grStars(r.rating || 5) + '</div>' +
       '<blockquote></blockquote>' +
-      '<p class="review__src">Google Review</p>';
+      '<p class="review__src"><svg class="g-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.6Z"/><path fill="#34A853" d="M12 24c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3C3.7 21.4 7.6 24 12 24Z"/><path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.6l3.8-3Z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1 0 12 0 7.6 0 3.7 2.6 1.8 6.1l3.8 3C6.5 6.7 9 4.8 12 4.8Z"/></svg> Google Review</p>';
 
     // Author name and body are set as text, never as markup. These strings come
     // from the open internet and must not be able to inject anything.
@@ -650,6 +650,53 @@
       });
   }
 
+
+  /* ---------- 12. announcement bar -------------------------------------
+     One bar, site-wide, injected above the header. Edit the config below to
+     change the message; set enabled:false to turn it off. Dismissal is
+     remembered per-id in localStorage, so changing the id re-shows the bar
+     to everyone after the message changes.
+     --------------------------------------------------------------------- */
+  const ANNOUNCE = {
+    enabled: true,
+    id: 'oe-2027',                       // bump when the message changes
+    strong: 'Open Enrollment is here:',
+    text: 'Nov 15 – Dec 15 — carriers waive participation minimums for Jan 1 coverage. Get your team locked in.',
+    linkText: 'Start my quote',
+    linkHref: '/quote/'
+  };
+
+  function initAnnounce() {
+    if (!ANNOUNCE.enabled) return;
+    var KEY = 'sb-announce-' + ANNOUNCE.id;
+    try { if (localStorage.getItem(KEY)) return; } catch (e) { /* storage blocked — just show it */ }
+
+    var bar = document.createElement('div');
+    bar.className = 'announce';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Announcement');
+    bar.innerHTML =
+      '<div class="container announce__inner">' +
+        '<p class="announce__text"><strong></strong> <span></span> ' +
+          '<a class="announce__link" href="' + ANNOUNCE.linkHref + '"></a></p>' +
+        '<button class="announce__close" type="button" aria-label="Dismiss announcement">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>';
+    // message set as text, not markup
+    bar.querySelector('strong').textContent = ANNOUNCE.strong;
+    bar.querySelector('.announce__text > span').textContent = ANNOUNCE.text;
+    bar.querySelector('.announce__link').textContent = ANNOUNCE.linkText;
+
+    var header = document.querySelector('.header');
+    document.body.insertBefore(bar, header || document.body.firstChild);
+
+    bar.querySelector('.announce__close').addEventListener('click', function () {
+      bar.remove();
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+    });
+  }
+
   /* ---------- boot ---------- */
   function init() {
     initPhotoSlots();
@@ -664,6 +711,7 @@
     initToTop();
     initYear();
     initGoogleReviews();
+    initAnnounce();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
