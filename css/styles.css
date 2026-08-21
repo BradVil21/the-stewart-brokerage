@@ -994,7 +994,10 @@ button { font: inherit; cursor: pointer; }
 .contact-list a, .contact-list span { font-size: var(--fs-sm); color: var(--ink-600); }
 
 .states-grid { display: grid; gap: var(--sp-3); }
-@media (min-width: 760px) { .states-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 700px) { .states-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) { .states-grid { grid-template-columns: repeat(4, 1fr); } }
+.state-card--more { background: var(--sky-50); border-color: var(--blue-200); }
+.state-card--more .state-card__flag { background: var(--blue-500); color: #fff; }
 .state-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--sp-3); box-shadow: var(--shadow-xs); transition: box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
 .state-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
 .state-card h3 { display: flex; align-items: center; gap: 0.6rem; font-size: var(--fs-h4); }

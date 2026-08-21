@@ -659,9 +659,9 @@
      --------------------------------------------------------------------- */
   const ANNOUNCE = {
     enabled: true,
-    id: 'oe-2027',                       // bump when the message changes
+    id: 'oe-2027-v2',                    // bump when the message changes
     strong: 'Open Enrollment is here:',
-    text: 'Nov 15 – Dec 15 — carriers waive participation minimums for Jan 1 coverage. Get your team locked in.',
+    text: 'Nov 1 – Jan 15 — the one window to lock in or switch coverage for the new year. Get your team set now.',
     linkText: 'Start my quote',
     linkHref: '/quote/'
   };
