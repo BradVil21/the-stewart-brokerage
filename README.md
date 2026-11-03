@@ -113,8 +113,13 @@ to change it in one place.
 This is the conversion page. Every CTA on the site, every blog post, and both inline article CTAs
 route here.
 
-**Nine steps:** industry → team size → state → current coverage → priorities (multi-select) →
-budget → timing → review → contact details.
+**Ten steps:** industry → team size → state → **business name + phone** → current coverage →
+priorities (multi-select) → budget → timing → review → owner name + email.
+
+**GoHighLevel:** set `GHL_WEBHOOK_URL` at the top of `js/main.js` to your workflow's Inbound
+Webhook URL. A `partial` lead is sent as soon as the business name + phone step is completed (so
+abandoned forms are still captured), then a `complete` lead on final submit. Both carry the same
+phone number so GHL updates one contact.
 
 Notes:
 

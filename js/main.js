@@ -20,6 +20,16 @@
 (function () {
   'use strict';
 
+  /* ---------- GoHighLevel lead capture ----------
+     Paste the URL from your GHL workflow's "Inbound Webhook" trigger here.
+     The quote funnel posts to it twice:
+       1. lead_status "partial"  — as soon as the business name + phone step
+          is completed, so people who quit the form are still captured.
+       2. lead_status "complete" — on final submit, with owner name, email
+          and every answer. Same phone number, so GHL updates the same contact.
+     Leave empty to run in demo mode (payloads are logged to the console). */
+  const GHL_WEBHOOK_URL = '';
+
   /* ---------- 01. helpers ---------- */
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -248,7 +258,7 @@
   const RULES = {
     required: (v) => v.trim().length > 0,
     email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
-    phone: (v) => v.trim() === '' || /^[\d\s().+-]{7,}$/.test(v.trim())
+    phone: (v) => v.trim() === '' || (/^[\d\s().+-]+$/.test(v.trim()) && v.replace(/\D/g, '').length >= 10)
   };
 
   function fieldError(input, message) {
@@ -287,6 +297,21 @@
     // ------------------------------------------------------------------
     console.log('[Stewart Brokerage] submission (demo):', payload);
     return new Promise((resolve) => setTimeout(resolve, 700));
+  }
+
+  // Posts a lead to the GHL inbound webhook. keepalive lets the request finish
+  // even if the visitor closes the tab right after clicking.
+  function sendToGHL(payload) {
+    if (!GHL_WEBHOOK_URL) {
+      console.log('[Stewart Brokerage] GHL lead (demo — set GHL_WEBHOOK_URL):', payload);
+      return Promise.resolve();
+    }
+    return fetch(GHL_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch((err) => console.warn('[Stewart Brokerage] GHL send failed:', err));
   }
 
   function initForms() {
@@ -430,6 +455,7 @@
       if (!summary) return;
       summary.innerHTML = '';
       const pretty = {
+        company: 'Business', phone: 'Phone',
         industry: 'Industry', teamSize: 'Team size', state: 'State',
         current: 'Current coverage', priorities: 'What matters most',
         budget: 'Budget per employee', timing: 'Start date'
@@ -457,6 +483,50 @@
       }
     });
 
+    // Flat payload with GHL-friendly keys for mapping in the workflow.
+    function ghlPayload(status) {
+      const list = (v) => (Array.isArray(v) ? v.join(', ') : v || '');
+      return {
+        lead_status: status,
+        company_name: answers.company || '',
+        phone: answers.phone || '',
+        first_name: answers.firstName || '',
+        last_name: answers.lastName || '',
+        email: answers.email || '',
+        industry: list(answers.industry),
+        team_size: list(answers.teamSize),
+        state: list(answers.state),
+        current_coverage: list(answers.current),
+        priorities: list(answers.priorities),
+        budget_per_employee: list(answers.budget),
+        start_timing: list(answers.timing),
+        notes: answers.notes || '',
+        tags: status === 'complete' ? 'website quote - complete' : 'website quote - partial',
+        source: 'quote-funnel',
+        page: window.location.href,
+        submitted_at: new Date().toISOString()
+      };
+    }
+
+    // Partial lead: fire once the business + phone step is done. Re-sends only
+    // if they come back and change the name or number.
+    let partialSig = '';
+    function sendPartial() {
+      const sig = (answers.company || '') + '|' + (answers.phone || '');
+      if (!answers.phone || sig === partialSig) return;
+      partialSig = sig;
+      sendToGHL(ghlPayload('partial'));
+    }
+
+    // Enter in a text field on a non-form step acts like Continue.
+    root.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' || !e.target.matches('input[type="text"], input[type="tel"], input[type="email"]')) return;
+      if (e.target.closest('form')) return;
+      e.preventDefault();
+      const btn = $('[data-next]', steps[index]);
+      if (btn) btn.click();
+    });
+
     root.addEventListener('click', (e) => {
       const next = e.target.closest('[data-next]');
       const back = e.target.closest('[data-back]');
@@ -465,6 +535,7 @@
         const step = steps[index];
         if (!validateStep(step)) return;
         collect(step);
+        if (step.dataset.step === 'business') sendPartial();
         show(index + 1);
       }
       if (back) { e.preventDefault(); show(index - 1); }
@@ -486,7 +557,7 @@
         const label = btn ? btn.textContent : '';
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-        deliver({ ...answers, source: 'quote-funnel', page: window.location.pathname }).then(() => {
+        sendToGHL(ghlPayload('complete')).then(() => {
           if (btn) { btn.disabled = false; btn.textContent = label; }
           const done = $('#funnelDone');
           if (done) {
@@ -630,6 +701,9 @@
         if (!reviews.length) return;                 // keep the proof cards
 
         track.replaceChildren.apply(track, reviews.map(grCard));
+
+        var lead = $('#reviewsLead');
+        if (lead) lead.textContent = 'Real reviews from Google, from real clients we have helped.';
 
         var rating = $('#reviewsRating'), none = $('#reviewsNoRating');
         if (rating && data.rating) {
