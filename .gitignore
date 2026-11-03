@@ -32,3 +32,12 @@ _git_lock_cleanup/
 
 # FUSE artifacts left by in-place edits over the mount
 .fuse_hidden*
+
+# Internal working documents — never publish.
+# GitHub Pages serves root files verbatim, so anything committed here is
+# readable at thestewartbrokerage.com/<filename>.
+independence-roadmap.md
+REVIEWS.md
+
+# Wrangler local cache (holds Cloudflare account info)
+.wrangler/

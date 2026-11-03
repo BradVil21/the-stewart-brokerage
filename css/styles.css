@@ -1357,3 +1357,52 @@ img.review__avatar { border-radius: 50%; object-fit: cover; }
 .reviews__rating .stars { display: inline-flex; gap: 1px; }
 .reviews__rating .stars svg { fill: #FBBC04; stroke: none; width: 15px; height: 15px; }
 .reviews__rating [data-gr="count"] { font-weight: 500; color: var(--ink-400); font-size: var(--fs-xs); }
+
+/* ---------- 29. Reviews section — Google-card refresh ----------
+   Centered header with a pill eyebrow, a Google rating badge, and cards that
+   read like a Google review: avatar, name, role/city/when, gold stars on the
+   right, the quote, then the Google attribution footer. Same card markup is
+   used by the live Places API render in main.js, so the swap is seamless. */
+.reviews__head { text-align: center; max-width: 700px; margin: 0 auto var(--sp-4); }
+.reviews__badge {
+  display: inline-block; margin: 0 0 1rem;
+  padding: 0.4rem 1rem; border-radius: var(--r-pill);
+  background: var(--sky-100); color: var(--navy-700);
+  font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: 0.13em; text-transform: uppercase;
+}
+.reviews__head h2 { margin: 0 0 0.75rem; }
+.reviews__head .lead { margin: 0 auto var(--sp-3); max-width: 34em; }
+.reviews__ratingRow { display: flex; justify-content: center; }
+.reviews__ratingRow .reviews__rating { margin-bottom: 0; }
+.reviews__ratingLabel { font-weight: 500; color: var(--ink-600); }
+
+/* Card polish. The card is a little wider than the base rule and the meta
+   line a little smaller, so "Role - City - 2 months ago" wraps to two clean
+   lines instead of orphaning a word next to the star row. */
+.review { width: min(80vw, 366px); padding: 1.35rem 1.4rem 1.15rem; gap: 0.85rem; }
+.review__top { align-items: flex-start; gap: 0.7rem; }
+.review__top .stars { margin-left: auto; flex: none; padding-top: 0.2rem; }
+.review__top .stars svg { width: 14px; height: 14px; }
+.review__avatar { width: 44px; height: 44px; font-size: 0.95rem; letter-spacing: 0.02em; }
+.review__who strong { font-weight: 700; }
+.review__who span { display: block; font-size: 0.72rem; line-height: 1.4; margin-top: 0.2rem; text-wrap: balance; }
+
+/* Decorative quote marks, matching the reference. Hidden from screen readers
+   because the blockquote element already conveys the quotation. */
+.review blockquote { position: relative; }
+.review blockquote::before,
+.review blockquote::after {
+  color: var(--blue-200); font-weight: 700; font-style: normal;
+  font-size: 1.15em; line-height: 0; vertical-align: -0.15em;
+}
+.review blockquote::before { content: '\201C'; margin-right: 0.1em; }
+.review blockquote::after  { content: '\201D'; margin-left: 0.1em; }
+.review--proof blockquote::before,
+.review--proof blockquote::after { content: none; }
+
+@media (max-width: 600px) {
+  .reviews__badge { letter-spacing: 0.1em; }
+  .review { width: min(86vw, 330px); }
+  .review__top .stars svg { width: 14px; height: 14px; }
+}
