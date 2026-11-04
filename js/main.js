@@ -23,9 +23,9 @@
   /* ---------- GoHighLevel lead capture ----------
      Paste the URL from your GHL workflow's "Inbound Webhook" trigger here.
      The quote funnel posts to it twice:
-       1. lead_status "partial"  — as soon as the business name + phone step
+       1. lead_status "partial"  — as soon as the business name + phone + email step
           is completed, so people who quit the form are still captured.
-       2. lead_status "complete" — on final submit, with owner name, email
+       2. lead_status "complete" — on final submit, with owner name
           and every answer. Same phone number, so GHL updates the same contact.
      Leave empty to run in demo mode (payloads are logged to the console). */
   const GHL_WEBHOOK_URL = '';
@@ -455,7 +455,7 @@
       if (!summary) return;
       summary.innerHTML = '';
       const pretty = {
-        company: 'Business', phone: 'Phone',
+        company: 'Business', phone: 'Phone', email: 'Email',
         industry: 'Industry', teamSize: 'Team size', state: 'State',
         current: 'Current coverage', priorities: 'What matters most',
         budget: 'Budget per employee', timing: 'Start date'
@@ -508,11 +508,11 @@
       };
     }
 
-    // Partial lead: fire once the business + phone step is done. Re-sends only
-    // if they come back and change the name or number.
+    // Partial lead: fire once the business + phone + email step is done. Re-sends only
+    // if they come back and change any of them.
     let partialSig = '';
     function sendPartial() {
-      const sig = (answers.company || '') + '|' + (answers.phone || '');
+      const sig = [answers.company, answers.phone, answers.email].join('|');
       if (!answers.phone || sig === partialSig) return;
       partialSig = sig;
       sendToGHL(ghlPayload('partial'));
